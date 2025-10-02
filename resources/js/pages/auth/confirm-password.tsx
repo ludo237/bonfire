@@ -1,0 +1,56 @@
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import GuestLayout from '@/layouts/guest-layout';
+import { store } from '@/routes/password/confirm';
+import { Form, Head } from '@inertiajs/react';
+import { LoaderCircle } from 'lucide-react';
+
+export default function ConfirmPassword() {
+    return (
+        <GuestLayout title="Confirm your password">
+            <Head title="Confirm password" />
+
+            <Form
+                {...store.post()}
+                disableWhileProcessing
+                resetOnSuccess={['password']}
+            >
+                {({ processing, errors }) => (
+                    <div className="space-y-6">
+                        <div className="grid gap-2">
+                            <Label htmlFor="password">Password</Label>
+                            <Input
+                                id="password"
+                                type="password"
+                                name="password"
+                                placeholder="Password"
+                                autoComplete="current-password"
+                                autoFocus
+                            />
+
+                            {errors.password && (
+                                <p className="text-sm text-red-600">
+                                    {errors.password}
+                                </p>
+                            )}
+                        </div>
+
+                        <div className="flex items-center">
+                            <Button
+                                className="w-full"
+                                disabled={processing}
+                                data-test="confirm-password-button"
+                            >
+                                {processing && (
+                                    <LoaderCircle className="h-4 w-4 animate-spin" />
+                                )}
+                                Confirm password
+                            </Button>
+                        </div>
+                    </div>
+                )}
+            </Form>
+        </GuestLayout>
+    );
+}
