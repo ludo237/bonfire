@@ -11,11 +11,11 @@ import { Head, Link } from '@inertiajs/react';
 export default function Welcome() {
     return (
         <>
-            <Head title="Welcome to Campfire" />
+            <Head title="Welcome to Bonefire" />
             <div className="flex min-h-screen items-center justify-center bg-background p-4">
                 <Card className="w-full max-w-md">
                     <CardHeader className="text-center">
-                        <CardTitle className="text-4xl">🔥 Campfire</CardTitle>
+                        <CardTitle className="text-4xl">Bonefire</CardTitle>
                         <CardDescription className="text-base">
                             Real-time team collaboration
                         </CardDescription>

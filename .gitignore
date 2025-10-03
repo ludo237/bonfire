@@ -26,8 +26,5 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
-once-campfire
 .claude
 .junie
-CAMPFIRE_ANALYSIS.md
-MIGRATION_PLAN.md

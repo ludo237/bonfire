@@ -1,3 +1,5 @@
+import { DangerZone } from '@/components/danger-zone';
+import { InputField } from '@/components/form-field';
 import { Button } from '@/components/ui/button';
 import {
     Card,
@@ -6,8 +8,7 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { useConfirmAction } from '@/hooks/use-confirm-action';
 import AppLayout from '@/layouts/app-layout';
 import { router, useForm } from '@inertiajs/react';
 
@@ -16,6 +17,7 @@ export default function EditRoom({ room }: { room: EloquentResource<Room> }) {
     const { data, setData, patch, processing, errors } = useForm({
         name: roomData.name,
     });
+    const { confirm } = useConfirmAction();
 
     const submit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -23,59 +25,53 @@ export default function EditRoom({ room }: { room: EloquentResource<Room> }) {
     };
 
     const handleDelete = () => {
-        if (confirm('Are you sure you want to delete this room?')) {
+        confirm('Are you sure you want to delete this room?', () => {
             router.delete(`/rooms/${roomData.id}`);
-        }
+        });
     };
 
     return (
         <AppLayout title="Edit Room">
             <div className="flex flex-1 items-center justify-center p-6">
-                <Card className="w-full max-w-md">
-                    <CardHeader>
-                        <CardTitle>Edit Room</CardTitle>
-                        <CardDescription>Update room settings</CardDescription>
-                    </CardHeader>
-                    <form onSubmit={submit}>
-                        <CardContent className="space-y-4">
-                            <div className="space-y-2">
-                                <Label htmlFor="name">Room Name</Label>
-                                <Input
-                                    id="name"
+                <div className="w-full max-w-md space-y-6">
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Edit Room</CardTitle>
+                            <CardDescription>
+                                Update room settings
+                            </CardDescription>
+                        </CardHeader>
+                        <form onSubmit={submit}>
+                            <CardContent className="space-y-4">
+                                <InputField
+                                    label="Room Name"
+                                    name="name"
                                     value={data.name}
                                     onChange={(e) =>
                                         setData('name', e.target.value)
                                     }
                                     autoFocus
                                     required
+                                    error={errors.name}
                                 />
-                                {errors.name && (
-                                    <p className="text-sm text-red-600">
-                                        {errors.name}
-                                    </p>
-                                )}
-                            </div>
 
-                            <div className="flex gap-2">
                                 <Button
                                     type="submit"
-                                    className="flex-1"
+                                    className="w-full"
                                     disabled={processing}
                                 >
                                     Save Changes
                                 </Button>
-                                <Button
-                                    type="button"
-                                    variant="destructive"
-                                    onClick={handleDelete}
-                                    disabled={processing}
-                                >
-                                    Delete
-                                </Button>
-                            </div>
-                        </CardContent>
-                    </form>
-                </Card>
+                            </CardContent>
+                        </form>
+                    </Card>
+
+                    <DangerZone
+                        description="Permanently delete this room and all its messages"
+                        actionLabel="Delete Room"
+                        onAction={handleDelete}
+                    />
+                </div>
             </div>
         </AppLayout>
     );

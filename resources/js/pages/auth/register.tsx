@@ -1,3 +1,4 @@
+import { InputField } from '@/components/form-field';
 import { Button } from '@/components/ui/button';
 import {
     Card,
@@ -7,8 +8,6 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import GuestLayout from '@/layouts/guest-layout';
 import { Form } from '@inertiajs/react';
 
@@ -26,62 +25,36 @@ export default function Register() {
                     {({ processing, errors }) => (
                         <>
                             <CardContent className="space-y-4">
-                                <div className="space-y-2">
-                                    <Label htmlFor="name">Name</Label>
-                                    <Input
-                                        id="name"
-                                        name="name"
-                                        autoFocus
-                                        required
-                                    />
-                                    {errors.name && (
-                                        <p className="text-sm text-red-600">
-                                            {errors.name}
-                                        </p>
-                                    )}
-                                </div>
+                                <InputField
+                                    label="Name"
+                                    name="name"
+                                    autoFocus
+                                    required
+                                    error={errors.name}
+                                />
 
-                                <div className="space-y-2">
-                                    <Label htmlFor="email">Email</Label>
-                                    <Input
-                                        id="email"
-                                        type="email"
-                                        name="email"
-                                        required
-                                    />
-                                    {errors.email && (
-                                        <p className="text-sm text-red-600">
-                                            {errors.email}
-                                        </p>
-                                    )}
-                                </div>
+                                <InputField
+                                    label="Email"
+                                    name="email"
+                                    type="email"
+                                    required
+                                    error={errors.email}
+                                />
 
-                                <div className="space-y-2">
-                                    <Label htmlFor="password">Password</Label>
-                                    <Input
-                                        id="password"
-                                        type="password"
-                                        name="password"
-                                        required
-                                    />
-                                    {errors.password && (
-                                        <p className="text-sm text-red-600">
-                                            {errors.password}
-                                        </p>
-                                    )}
-                                </div>
+                                <InputField
+                                    label="Password"
+                                    name="password"
+                                    type="password"
+                                    required
+                                    error={errors.password}
+                                />
 
-                                <div className="space-y-2">
-                                    <Label htmlFor="password_confirmation">
-                                        Confirm Password
-                                    </Label>
-                                    <Input
-                                        id="password_confirmation"
-                                        type="password"
-                                        name="password_confirmation"
-                                        required
-                                    />
-                                </div>
+                                <InputField
+                                    label="Confirm Password"
+                                    name="password_confirmation"
+                                    type="password"
+                                    required
+                                />
                             </CardContent>
                             <CardFooter>
                                 <Button

@@ -20,7 +20,7 @@ export default function AppLayout({
                 {/* Sidebar */}
                 <div className="flex w-64 flex-col border-r bg-muted/40">
                     <div className="border-b p-4">
-                        <h1 className="text-xl font-bold">Campfire</h1>
+                        <h1 className="text-xl font-bold">Bonefire</h1>
                     </div>
 
                     <div className="flex-1 overflow-y-auto p-4">

@@ -1,3 +1,4 @@
+import { InputField } from '@/components/form-field';
 import { Button } from '@/components/ui/button';
 import {
     Card,
@@ -6,7 +7,6 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import AppLayout from '@/layouts/app-layout';
@@ -35,24 +35,18 @@ export default function CreateRoom() {
                     </CardHeader>
                     <form onSubmit={submit}>
                         <CardContent className="space-y-4">
-                            <div className="space-y-2">
-                                <Label htmlFor="name">Room Name</Label>
-                                <Input
-                                    id="name"
-                                    value={data.name}
-                                    onChange={(e) =>
-                                        setData('name', e.target.value)
-                                    }
-                                    placeholder="General Chat"
-                                    autoFocus
-                                    required
-                                />
-                                {errors.name && (
-                                    <p className="text-sm text-red-600">
-                                        {errors.name}
-                                    </p>
-                                )}
-                            </div>
+                            <InputField
+                                label="Room Name"
+                                name="name"
+                                value={data.name}
+                                onChange={(e) =>
+                                    setData('name', e.target.value)
+                                }
+                                placeholder="General Chat"
+                                autoFocus
+                                required
+                                error={errors.name}
+                            />
 
                             <div className="space-y-2">
                                 <Label>Room Type</Label>
@@ -62,7 +56,7 @@ export default function CreateRoom() {
                                         setData('type', value)
                                     }
                                 >
-                                    <div className="flex items-center space-x-2">
+                                    <div className="flex items-center gap-2">
                                         <RadioGroupItem
                                             value="public"
                                             id="public"
@@ -74,7 +68,7 @@ export default function CreateRoom() {
                                             Public - Everyone can join
                                         </Label>
                                     </div>
-                                    <div className="flex items-center space-x-2">
+                                    <div className="flex items-center gap-2">
                                         <RadioGroupItem
                                             value="closed"
                                             id="closed"
