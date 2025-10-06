@@ -14,9 +14,10 @@ export default defineConfig({
         react(),
         tailwindcss(),
         wayfinder({
-            formVariants: false,
-            actions: false,
-            routes: true
+            path: "resources/js/wayfinder",
+            formVariants: true,
+            actions: true,
+            routes: false
         }),
     ],
     esbuild: {

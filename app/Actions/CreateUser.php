@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Actions;
 
 use App\Models\User;
-use App\UserRole;
+use App\UserType;
 
 class CreateUser
 {
@@ -14,7 +14,7 @@ class CreateUser
      *
      * @param  array<string, mixed>  $data
      */
-    public function handle(array $data, UserRole $role = UserRole::MEMBER): User
+    public function handle(array $data, UserType $role = UserType::MEMBER): User
     {
         return User::query()->create([
             'name' => $data['name'],

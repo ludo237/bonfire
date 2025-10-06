@@ -7,7 +7,7 @@ namespace App\Actions;
 use App\Models\Room;
 use App\Models\User;
 use App\RoomType;
-use App\UserRole;
+use App\UserType;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
@@ -29,7 +29,7 @@ class SetupApplication
     public function handle(array $userData): User
     {
         return DB::transaction(function () use ($userData) {
-            $admin = $this->createUser->handle($userData, UserRole::ADMIN);
+            $admin = $this->createUser->handle($userData, UserType::ADMIN);
 
             $room = Room::query()->create([
                 'name' => self::FIRST_ROOM_NAME,

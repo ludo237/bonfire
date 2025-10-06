@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\InvolvementLevel;
 use App\RoomType;
+use Database\Factories\RoomFactory;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,9 +14,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 
 class Room extends Model
 {
+    /** @use HasFactory<RoomFactory> */
     use HasFactory, HasUlids;
 
     protected $guarded = ['id'];
@@ -39,14 +42,13 @@ class Room extends Model
         return $this->getAttributeValue('type') === RoomType::DIRECT;
     }
 
-    public function memberships(): HasMany
-    {
-        return $this->hasMany(Membership::class, 'room_id');
-    }
-
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'memberships')
+        return $this
+            ->belongsToMany(
+                related: User::class,
+                table: 'room_user'
+            )
             ->withPivot(['unread_at', 'involvement', 'connections', 'connected_at'])
             ->withTimestamps();
     }
@@ -56,9 +58,9 @@ class Room extends Model
         return $this->hasMany(Message::class, 'room_id');
     }
 
-    public function owner(): BelongsTo
+    public function organization(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'owner_id');
+        return $this->belongsTo(Organization::class);
     }
 
     #[Scope]
@@ -79,27 +81,20 @@ class Room extends Model
         return $query->where('type', RoomType::DIRECT);
     }
 
-    #[Scope]
-    public function ordered($query)
-    {
-        return $query->orderByRaw('LOWER(name)');
-    }
-
     /**
-     * @param  User[]  $users
+     * @param  Collection<User>  $users
      */
-    public function grantAccessTo(array $users): void
+    public function grantAccessTo(Collection $users): void
     {
-        $data = collect($users)
-            ->map(fn (User $user) => [
-                'room_id' => $this->getKey(),
-                'user_id' => $user->getKey(),
-                'involvement' => $this->defaultInvolvement(),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+        $data = $users->map(fn (User $user) => [
+            'room_id' => $this->getKey(),
+            'user_id' => $user->getKey(),
+            'involvement' => $this->defaultInvolvement(),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
 
-        Membership::query()->insertOrIgnore($data->all());
+        RoomUser::query()->insertOrIgnore($data->all());
     }
 
     /**
@@ -109,7 +104,7 @@ class Room extends Model
     {
         $userIds = collect($users)->map(fn (User $user) => $user->getKey());
 
-        $this->memberships()->whereIn('user_id', $userIds)->delete();
+        $this->users()->whereIn('user_id', $userIds)->delete();
     }
 
     public function defaultInvolvement(): string

@@ -5,18 +5,19 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\InvolvementLevel;
+use Database\Factories\RoomUserFactory;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Ludo237\Traits\ExposeTableProperties;
 
-class Membership extends Pivot
+class RoomUser extends Pivot
 {
-    use HasFactory;
+    /** @use HasFactory<RoomUserFactory> */
+    use ExposeTableProperties, HasFactory;
 
-    protected $table = 'memberships';
-
-    protected $guarded = ['id'];
+    protected $table = 'room_user';
 
     public function user(): BelongsTo
     {

@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Models\Boost;
-use App\Models\Message;
-use App\Models\User;
+use App\Models\Organization;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Boost>
+ * @extends Factory<Organization>
  */
-class BoostFactory extends Factory
+class OrganizationFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -22,9 +20,7 @@ class BoostFactory extends Factory
     public function definition(): array
     {
         return [
-            'message_id' => Message::factory(),
-            'booster_id' => User::factory(),
-            'content' => $this->faker->randomElement(['👍', '❤️', '😂']),
+            'name' => $this->faker->company(),
         ];
     }
 }

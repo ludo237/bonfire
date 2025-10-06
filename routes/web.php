@@ -9,39 +9,26 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
-use App\Http\Controllers\FirstRunController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JoinController;
 use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\Settings\TwoFactorAuthenticationController;
-use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', WelcomeController::class)->name('welcome');
-
-Route::prefix('first-run')->group(function () {
-    Route::get('', [FirstRunController::class, 'show'])->name('first-run.show');
-    Route::post('', [FirstRunController::class, 'store'])->name('first-run.store');
-});
-
-Route::prefix('join')->group(function () {
-    Route::prefix('{code}')->group(function () {
-        Route::get('', [JoinController::class, 'show'])->name('join.show');
-        Route::post('', [JoinController::class, 'store'])->name('join.store');
-    });
-});
-
 Route::middleware('guest')->group(function () {
+    Route::get('/', HomeController::class)->name('home');
+
     Route::prefix('register')->group(function () {
-        Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
-        Route::post('register', [RegisteredUserController::class, 'store'])->name('register.store');
+        Route::get('', [RegisteredUserController::class, 'create'])->name('register');
+        Route::post('', [RegisteredUserController::class, 'store'])->name('register.store');
     });
 
     Route::prefix('login')->group(function () {
-        Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
-        Route::post('login', [AuthenticatedSessionController::class, 'store'])->name('login.store');
+        Route::get('', [AuthenticatedSessionController::class, 'create'])->name('login');
+        Route::post('', [AuthenticatedSessionController::class, 'store'])->name('login.store');
     });
 
     Route::prefix('forgot-password')->group(function () {
@@ -52,6 +39,13 @@ Route::middleware('guest')->group(function () {
     Route::prefix('reset-password')->group(function () {
         Route::get('{token}', [NewPasswordController::class, 'create'])->name('password.reset');
         Route::post('', [NewPasswordController::class, 'store'])->name('password.store');
+    });
+});
+
+Route::prefix('join')->group(function () {
+    Route::prefix('{code}')->group(function () {
+        Route::get('', [JoinController::class, 'show'])->name('join.show');
+        Route::post('', [JoinController::class, 'store'])->name('join.store');
     });
 });
 

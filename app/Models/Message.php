@@ -75,7 +75,7 @@ class Message extends Model
         static::created(function (Message $message) {
             $message->room->touch();
 
-            Membership::query()
+            RoomUser::query()
                 ->where('room_id', $message->room_id)
                 ->where('user_id', '!=', $message->sender_id)
                 ->where('connections', 0)

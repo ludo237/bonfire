@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\UserRole;
-use Illuminate\Database\Eloquent\Attributes\Scope;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,6 +20,7 @@ use Throwable;
 
 class User extends Authenticatable
 {
+    /** @use HasFactory<UserFactory> */
     use HasApiTokens, HasFactory, HasUlids, Notifiable, SoftDeletes, TwoFactorAuthenticatable;
 
     protected $guarded = ['id'];
@@ -33,21 +33,9 @@ class User extends Authenticatable
         'bot_token',
     ];
 
-    public function memberships(): HasMany
+    public function boosts(): HasMany
     {
-        return $this->hasMany(Membership::class);
-    }
-
-    public function rooms(): BelongsToMany
-    {
-        return $this
-            ->belongsToMany(
-                related: Room::class,
-                table: 'memberships'
-            )
-            ->using(Membership::class)
-            ->withPivot(['unread_at', 'involvement', 'connections', 'connected_at'])
-            ->withTimestamps();
+        return $this->hasMany(Boost::class, 'booster_id');
     }
 
     public function messages(): HasMany
@@ -55,14 +43,32 @@ class User extends Authenticatable
         return $this->hasMany(Message::class, 'sender_id');
     }
 
-    public function boosts(): HasMany
+    public function organizations(): BelongsToMany
     {
-        return $this->hasMany(Boost::class, 'booster_id');
+        return $this
+            ->belongsToMany(
+                related: Organization::class,
+                table: 'organization_user'
+            )
+            ->using(OrganizationUser::class)
+            ->withPivot(['role', 'joined_at']);
     }
 
     public function pushSubscriptions(): HasMany
     {
         return $this->hasMany(PushSubscription::class);
+    }
+
+    public function rooms(): BelongsToMany
+    {
+        return $this
+            ->belongsToMany(
+                related: Room::class,
+                table: 'room_user'
+            )
+            ->using(RoomUser::class)
+            ->withPivot(['unread_at', 'involvement', 'connections', 'connected_at'])
+            ->withTimestamps();
     }
 
     public function searches(): HasMany
@@ -73,30 +79,6 @@ class User extends Authenticatable
     public function webhooks(): HasMany
     {
         return $this->hasMany(Webhook::class, 'bot_id');
-    }
-
-    #[Scope]
-    public function ordered($query)
-    {
-        return $query->orderByRaw('LOWER(name)');
-    }
-
-    #[Scope]
-    public function bots($query)
-    {
-        return $query->whereNotNull('bot_token');
-    }
-
-    public function getInitialsAttribute(): string
-    {
-        return collect(explode(' ', $this->name))
-            ->map(fn ($word) => mb_strtoupper($word[0] ?? ''))
-            ->join('');
-    }
-
-    public function isAdmin(): bool
-    {
-        return $this->role === UserRole::ADMIN;
     }
 
     public function isBot(): bool
@@ -110,7 +92,7 @@ class User extends Authenticatable
     public function deactivate(): void
     {
         DB::transaction(function () {
-            $this->memberships()
+            $this->rooms()
                 ->whereHas('room', fn (Builder $q) => $q->direct())
                 ->delete();
 
@@ -131,7 +113,6 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'two_factor_confirmed_at' => 'datetime',
             'password' => 'hashed',
-            'role' => UserRole::class,
         ];
     }
 }

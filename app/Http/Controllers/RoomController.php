@@ -22,7 +22,7 @@ class RoomController extends Controller
         $user = $request->user();
 
         $rooms = Room::query()
-            ->with('owner')
+            ->with('organization')
             ->withCount(['messages'])
             ->whereHas('users', fn (Builder $q) => $q->whereKey($user->getKey()))
             ->latest()
@@ -37,7 +37,7 @@ class RoomController extends Controller
     {
         Gate::authorize('view', $room);
 
-        $room->loadMissing(['owner', 'users', 'messages.sender']);
+        $room->loadMissing(['organization', 'users', 'messages.sender']);
 
         return Inertia::render('rooms/show', [
             'room' => new RoomResource($room),

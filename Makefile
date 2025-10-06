@@ -1,3 +1,10 @@
+laravel-init:
+	cp .env.example .env
+	php artisan key:generate
+	touch database/database.sqlite
+	php artisan migrate:fresh --seed
+	bun i
+
 dev:
 	php artisan serve & \
 	php artisan queue:listen --tries=1 & \

@@ -23,7 +23,7 @@ class RoomResource extends JsonResource
             'slug' => $this->getAttributeValue('slug'),
             'name' => $this->getAttributeValue('name'),
             'type' => $this->getAttributeValue('type'),
-            'owner' => new UserResource($this->whenLoaded('owner')),
+            'owner' => new UserResource($this->whenLoaded('organization')),
             'messages' => MessageResource::collection($this->whenLoaded('messages')),
             'users' => UserResource::collection($this->whenLoaded('users')),
             'counts' => [

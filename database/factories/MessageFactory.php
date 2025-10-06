@@ -26,7 +26,7 @@ class MessageFactory extends Factory
             'room_id' => Room::factory(),
             'creator_id' => User::factory(),
             'client_message_id' => Str::uuid(),
-            'body' => '<p>'.fake()->paragraph().'</p>',
+            'body' => '<p>'.$this->faker->paragraph().'</p>',
         ];
     }
 }

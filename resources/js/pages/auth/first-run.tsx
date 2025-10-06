@@ -13,10 +13,10 @@ import { Form } from '@inertiajs/react';
 
 export default function FirstRun() {
     return (
-        <GuestLayout title="Welcome to Bonefire">
+        <GuestLayout title="Home to Bonefire">
             <Card>
                 <CardHeader>
-                    <CardTitle>Welcome to Bonefire</CardTitle>
+                    <CardTitle>Home to Bonefire</CardTitle>
                     <CardDescription>
                         Let's set up your admin account
                     </CardDescription>

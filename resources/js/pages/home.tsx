@@ -7,11 +7,13 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import { Head, Link } from '@inertiajs/react';
+import AuthenticatedSessionController from '@/wayfinder/actions/App/Http/Controllers/Auth/AuthenticatedSessionController';
+import RegisteredUserController from '@/wayfinder/actions/App/Http/Controllers/Auth/RegisteredUserController';
 
-export default function Welcome() {
+export default function Home() {
     return (
         <>
-            <Head title="Welcome to Bonefire" />
+            <Head title="Home to Bonefire" />
             <div className="flex min-h-screen items-center justify-center bg-background p-4">
                 <Card className="w-full max-w-md">
                     <CardHeader className="text-center">
@@ -26,7 +28,7 @@ export default function Welcome() {
                             collaborate, and stay in sync.
                         </p>
                         <div className="space-y-2">
-                            <Link href="/login" className="block">
+                            <Link href={AuthenticatedSessionController.create()} className="block">
                                 <Button className="w-full" size="lg">
                                     Sign In
                                 </Button>
@@ -34,7 +36,7 @@ export default function Welcome() {
                             <p className="text-center text-xs text-muted-foreground">
                                 New here?{' '}
                                 <Link
-                                    href="/register"
+                                    href={RegisteredUserController.create()}
                                     className="hover:underline"
                                 >
                                     Create an account

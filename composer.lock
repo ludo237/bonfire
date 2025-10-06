@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d4495aa87b3fa2608eeed578ac736161",
+    "content-hash": "f4d0cbc148ce85831261532c2e34dbf6",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -2633,6 +2633,69 @@
                 }
             ],
             "time": "2024-12-08T08:18:47+00:00"
+        },
+        {
+            "name": "ludo237/laravel-traits",
+            "version": "v6.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://gitlab.com/ludo237/laravel-traits.git",
+                "reference": "f9e788199275927843006d3231b84aacaa521819"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://gitlab.com/api/v4/projects/ludo237%2Flaravel-traits/repository/archive.zip?sha=f9e788199275927843006d3231b84aacaa521819",
+                "reference": "f9e788199275927843006d3231b84aacaa521819",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "11.x | 12.x",
+                "php": "^8.2"
+            },
+            "require-dev": {
+                "fakerphp/faker": "^1.11",
+                "larastan/larastan": "^v3.1.0",
+                "laravel/framework": "11.x | 12.x",
+                "laravel/pint": "^1.14",
+                "mockery/mockery": "^1.6",
+                "orchestra/testbench": "^v9.11.0",
+                "pestphp/pest": "^v3.7"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": [],
+                    "providers": []
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ludo237\\Traits\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Claudio Ludovico",
+                    "email": "quiet.flame8899@fastmail.com"
+                }
+            ],
+            "description": "Useful set of Laravel traits",
+            "homepage": "https://gitlab.com/ludo237/laravel-traits",
+            "keywords": [
+                "laravel",
+                "laravel-package",
+                "open-source",
+                "traits"
+            ],
+            "support": {
+                "issues": "https://gitlab.com/ludo237/laravel-traits/-/issues",
+                "source": "https://gitlab.com/ludo237/laravel-traits/-/tree/v6.0.0"
+            },
+            "time": "2025-02-24T19:03:35+00:00"
         },
         {
             "name": "monolog/monolog",

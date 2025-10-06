@@ -21,10 +21,10 @@ class RoomFactory extends Factory
     public function definition(): array
     {
         return [
-            'slug' => fake()->slug(),
-            'name' => fake()->words(2, true),
-            'type' => fake()->randomElement([RoomType::PRIVATE, RoomType::PUBLIC]),
-            'owner_id' => UserFactory::new()->lazy(),
+            'slug' => $this->faker->slug(),
+            'name' => $this->faker->words(2, true),
+            'type' => $this->faker->randomElement([RoomType::PRIVATE, RoomType::PUBLIC]),
+            'organization_id' => OrganizationFactory::new()->lazy(),
         ];
     }
 

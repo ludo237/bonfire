@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('client_message_id')->unique();
             $table->foreignUlid('room_id')->constrained()->cascadeOnDelete();
             $table->foreignUlid('sender_id')->constrained('users')->cascadeOnDelete();
-            $table->text('body');
+            $table->longText('body');
             $table->timestamps();
 
             $table->index(['room_id', 'created_at']);

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Models\Membership;
 use App\Models\Room;
+use App\Models\RoomUser;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Membership>
+ * @extends Factory<RoomUser>
  */
 class MembershipFactory extends Factory
 {

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use App\Models\User;
-use App\UserRole;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -28,13 +27,12 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'biography' => fake()->sentence(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => fake()->dateTimeThisYear(),
+            'name' => $this->faker->name(),
+            'biography' => $this->faker->sentence(),
+            'email' => $this->faker->unique()->safeEmail(),
+            'email_verified_at' => $this->faker->dateTimeThisYear(),
             'password' => static::$password ??= Hash::make('supersecret'),
             'remember_token' => Str::random(10),
-            'role' => UserRole::MEMBER,
         ];
     }
 
@@ -49,14 +47,12 @@ class UserFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'email' => 'foo@bar.com',
-            'role' => UserRole::ADMIN,
         ]);
     }
 
     public function bot(): static
     {
         return $this->state(fn (array $attributes) => [
-            'role' => UserRole::BOT,
             'bot_token' => $token = Str::ulid(),
             'email' => "$token@bot-user.com",
         ]);
