@@ -14,8 +14,6 @@ import { SharedPageProps } from '@/types/inertia';
 import { Form, Head, router, usePage } from '@inertiajs/react';
 import { ReactElement } from 'react';
 
-interface PageProps extends SharedPageProps {}
-
 const ProfileSettingsPage = () => {
     const user: User = usePage<SharedPageProps>().props.auth.user!.data;
     const { confirm } = useConfirmAction();
@@ -91,7 +89,7 @@ const ProfileSettingsPage = () => {
     );
 };
 
-ProfileSettingsPage.layout = (page: ReactElement<PageProps>) => {
+ProfileSettingsPage.layout = (page: ReactElement) => {
     return <SettingsLayout title="Your profile">{page}</SettingsLayout>;
 };
 

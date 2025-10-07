@@ -2,7 +2,6 @@ import { DataTableSection } from '@/components/organization/data-table-section';
 import { InviteMemberCard } from '@/components/organization/invite-member-card';
 import { LatestMessagesCard } from '@/components/organization/latest-messages-card';
 import { StatsCard } from '@/components/organization/stats-card';
-import { PageHeader } from '@/components/page-header';
 import AppLayout from '@/layouts/app-layout';
 import { SharedPageProps } from '@/types/inertia';
 import { Head } from '@inertiajs/react';
@@ -33,30 +32,28 @@ const OrganizationIndexPage = ({
         <>
             <Head title={organization.data.name} />
             <div className="flex-1 overflow-y-auto">
-                    <div className="space-y-6">
-                        <div className="grid gap-6 md:grid-cols-3">
-                            <LatestMessagesCard
-                                messages={latestMessages.data}
-                            />
-                            <StatsCard stats={stats} />
-                            <InviteMemberCard />
-                        </div>
+                <div className="space-y-6">
+                    <div className="grid gap-6 md:grid-cols-3">
+                        <LatestMessagesCard messages={latestMessages.data} />
+                        <StatsCard stats={stats} />
+                        <InviteMemberCard />
+                    </div>
 
-                        <div className="grid gap-6 lg:grid-cols-2">
-                            <DataTableSection
-                                title="Members"
-                                columns={memberColumns}
-                                data={members}
-                            />
+                    <div className="grid gap-6 lg:grid-cols-2">
+                        <DataTableSection
+                            title="Members"
+                            columns={memberColumns}
+                            data={members}
+                        />
 
-                            <DataTableSection
-                                title="Rooms"
-                                columns={roomColumns}
-                                data={rooms}
-                            />
-                        </div>
+                        <DataTableSection
+                            title="Rooms"
+                            columns={roomColumns}
+                            data={rooms}
+                        />
                     </div>
                 </div>
+            </div>
         </>
     );
 };

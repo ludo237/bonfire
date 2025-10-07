@@ -9,11 +9,8 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import SettingsLayout from '@/layouts/settings-layout';
-import { SharedPageProps } from '@/types/inertia';
 import { Form, Head } from '@inertiajs/react';
 import { ReactElement } from 'react';
-
-interface PageProps extends SharedPageProps {}
 
 const PasswordSettingsPage = () => {
     return (
@@ -89,7 +86,7 @@ const PasswordSettingsPage = () => {
     );
 };
 
-PasswordSettingsPage.layout = (page: ReactElement<PageProps>) => {
+PasswordSettingsPage.layout = (page: ReactElement) => {
     return <SettingsLayout title="Security">{page}</SettingsLayout>;
 };
 

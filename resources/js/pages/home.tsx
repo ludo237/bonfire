@@ -6,12 +6,9 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-import { SharedPageProps } from '@/types/inertia';
 import AuthenticatedSessionController from '@/wayfinder/actions/App/Http/Controllers/Auth/AuthenticatedSessionController';
 import RegisteredUserController from '@/wayfinder/actions/App/Http/Controllers/Auth/RegisteredUserController';
 import { Head, Link } from '@inertiajs/react';
-
-interface PageProps extends SharedPageProps {}
 
 const HomePage = () => {
     return (

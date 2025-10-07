@@ -6,7 +6,7 @@ import { useRoomPresence } from '@/hooks/use-room-presence';
 import { useTypingIndicator } from '@/hooks/use-typing-indicator';
 import AppLayout from '@/layouts/app-layout';
 import { SharedPageProps } from '@/types/inertia';
-import { Head,usePage } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import { ReactElement } from 'react';
 
 interface PageProps extends SharedPageProps {

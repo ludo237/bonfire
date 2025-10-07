@@ -2,13 +2,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import GuestLayout from '@/layouts/guest-layout';
-import { SharedPageProps } from '@/types/inertia';
 import ConfirmablePasswordController from '@/wayfinder/actions/Laravel/Fortify/Http/Controllers/ConfirmablePasswordController';
 import { Form, Head } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { ReactElement } from 'react';
-
-interface PageProps extends SharedPageProps {}
 
 const ConfirmPasswordPage = () => {
     return (
@@ -58,7 +55,7 @@ const ConfirmPasswordPage = () => {
     );
 };
 
-ConfirmPasswordPage.layout = (page: ReactElement<PageProps>) => {
+ConfirmPasswordPage.layout = (page: ReactElement) => {
     return <GuestLayout>{page}</GuestLayout>;
 };
 

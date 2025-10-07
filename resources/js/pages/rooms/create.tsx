@@ -10,11 +10,8 @@ import {
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import AppLayout from '@/layouts/app-layout';
-import { SharedPageProps } from '@/types/inertia';
 import { Head, useForm } from '@inertiajs/react';
 import { ReactElement } from 'react';
-
-interface PageProps extends SharedPageProps {}
 
 const RoomCreatePage = () => {
     const { data, setData, post, processing, errors } = useForm({
@@ -108,7 +105,7 @@ const RoomCreatePage = () => {
     );
 };
 
-RoomCreatePage.layout = (page: ReactElement<PageProps>) => {
+RoomCreatePage.layout = (page: ReactElement) => {
     return <AppLayout>{page}</AppLayout>;
 };
 
