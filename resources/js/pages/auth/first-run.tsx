@@ -8,9 +8,14 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
+import GuestLayout from '@/layouts/guest-layout';
+import { SharedPageProps } from '@/types/inertia';
 import { Form, Head } from '@inertiajs/react';
+import { ReactElement } from 'react';
 
-export default function FirstRun() {
+interface PageProps extends SharedPageProps {}
+
+const FirstRunPage = () => {
     return (
         <>
             <Head title="Welcome to Bonefire" />
@@ -64,4 +69,10 @@ export default function FirstRun() {
             </Card>
         </>
     );
-}
+};
+
+FirstRunPage.layout = (page: ReactElement<PageProps>) => {
+    return <GuestLayout>{page}</GuestLayout>;
+};
+
+export default FirstRunPage;

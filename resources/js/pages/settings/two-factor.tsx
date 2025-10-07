@@ -8,18 +8,22 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import SettingsLayout from '@/layouts/settings-layout';
+import { SharedPageProps } from '@/types/inertia';
 import { Head, router, useForm } from '@inertiajs/react';
-import { FormEvent, useState } from 'react';
+import { FormEvent, ReactElement, useState } from 'react';
 
-export default function TwoFactorSettings({
-    twoFactorEnabled,
-    qrCodeSvg,
-    recoveryCodes,
-}: {
+interface PageProps extends SharedPageProps {
     twoFactorEnabled: boolean;
     qrCodeSvg?: string;
     recoveryCodes?: string[];
-}) {
+}
+
+const TwoFactorSettingsPage = ({
+    twoFactorEnabled,
+    qrCodeSvg,
+    recoveryCodes,
+}: PageProps) => {
     const [enabling, setEnabling] = useState(false);
     const { data, setData, post, processing } = useForm({
         code: '',
@@ -134,4 +138,10 @@ export default function TwoFactorSettings({
             </Card>
         </>
     );
-}
+};
+
+TwoFactorSettingsPage.layout = (page: ReactElement<PageProps>) => {
+    return <SettingsLayout>{page}</SettingsLayout>;
+};
+
+export default TwoFactorSettingsPage;

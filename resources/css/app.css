@@ -1,5 +1,4 @@
-@import 'tailwindcss';
-
+@import 'tailwindcss' theme(static);
 @plugin 'tailwindcss-animate';
 
 @source '../views';
@@ -44,21 +43,28 @@
     --font-serif: Nunito, sans-serif;
     --font-mono: JetBrains Mono, monospace;
 
-    --radius: 0.5rem;
+    --radius: 0.25rem;
 
-    --shadow-2xs: 0 1px 3px 0px oklch(0 0 0 / 0.05);
-    --shadow-xs: 0 1px 3px 0px oklch(0 0 0 / 0.05);
+    --shadow-2xs: 0 1px 1.5px 0.5px oklch(0 0 0 / 0.13);
+    --shadow-xs: 0 1px 1.5px 0.5px oklch(0 0 0 / 0.13);
     --shadow-sm:
-        0 1px 3px 0px oklch(0 0 0 / 0.1), 0 1px 2px -1px oklch(0 0 0 / 0.1);
+        0 1px 1.5px 0.5px oklch(0 0 0 / 0.25),
+        0 1px 2px -0.5px oklch(0 0 0 / 0.25);
     --shadow:
-        0 1px 3px 0px oklch(0 0 0 / 0.1), 0 1px 2px -1px oklch(0 0 0 / 0.1);
+        0 1px 1.5px 0.5px oklch(0 0 0 / 0.25),
+        0 1px 2px -0.5px oklch(0 0 0 / 0.25);
     --shadow-md:
-        0 1px 3px 0px oklch(0 0 0 / 0.1), 0 2px 4px -1px oklch(0 0 0 / 0.1);
+        0 1px 1.5px 0.5px oklch(0 0 0 / 0.25),
+        0 2px 4px -0.5px oklch(0 0 0 / 0.25);
     --shadow-lg:
-        0 1px 3px 0px oklch(0 0 0 / 0.1), 0 4px 6px -1px oklch(0 0 0 / 0.1);
+        0 1px 1.5px 0.5px oklch(0 0 0 / 0.25),
+        0 4px 6px -0.5px oklch(0 0 0 / 0.25);
     --shadow-xl:
-        0 1px 3px 0px oklch(0 0 0 / 0.1), 0 8px 10px -1px oklch(0 0 0 / 0.1);
-    --shadow-2xl: 0 1px 3px 0px oklch(0 0 0 / 0.25);
+        0 1px 1.5px 0.5px oklch(0 0 0 / 0.25),
+        0 8px 10px -0.5px oklch(0 0 0 / 0.25);
+    --shadow-2xl: 0 1px 1.5px 0.5px oklch(0 0 0 / 0.63);
+
+    --tracking-normal: 0.025em;
 }
 
 .dark {
@@ -159,6 +165,13 @@
     --shadow-lg: var(--shadow-lg);
     --shadow-xl: var(--shadow-xl);
     --shadow-2xl: var(--shadow-2xl);
+
+    --tracking-tighter: calc(var(--tracking-normal) - 0.05em);
+    --tracking-tight: calc(var(--tracking-normal) - 0.025em);
+    --tracking-normal: var(--tracking-normal);
+    --tracking-wide: calc(var(--tracking-normal) + 0.025em);
+    --tracking-wider: calc(var(--tracking-normal) + 0.05em);
+    --tracking-widest: calc(var(--tracking-normal) + 0.1em);
 }
 
 @layer base {
@@ -167,15 +180,12 @@
     }
 
     body {
+        letter-spacing: var(--tracking-normal);
         @apply bg-background text-foreground;
     }
-}
 
-@layer base {
-    * {
-        @apply border-border outline-ring/50;
-    }
-    body {
-        @apply bg-background text-foreground;
+    .required::after {
+        content: '*';
+        color: var(--destructive);
     }
 }

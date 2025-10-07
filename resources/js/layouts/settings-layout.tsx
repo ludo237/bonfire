@@ -17,7 +17,6 @@ export default function SettingsLayout({
                 </div>
 
                 <div className="flex flex-1 overflow-hidden">
-                    {/* Settings Tabs */}
                     <nav className="w-56 space-y-1 border-r p-4">
                         <Link
                             href="/users/me"
@@ -37,9 +36,14 @@ export default function SettingsLayout({
                         >
                             Two-Factor Auth
                         </Link>
-                    </nav>
 
-                    {/* Settings Content */}
+                        <Link
+                            href="/users/me/settings/appearance"
+                            className="block rounded-lg px-3 py-2 text-sm font-medium hover:bg-accent"
+                        >
+                            Settings
+                        </Link>
+                    </nav>
                     <div className="flex-1 overflow-y-auto p-6">{children}</div>
                 </div>
             </div>

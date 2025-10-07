@@ -6,9 +6,16 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
+import GuestLayout from '@/layouts/guest-layout';
+import { SharedPageProps } from '@/types/inertia';
 import { Form, Head, Link } from '@inertiajs/react';
+import { ReactElement } from 'react';
 
-export default function VerifyEmail({ status }: { status?: string }) {
+interface PageProps extends SharedPageProps {
+    status?: string;
+}
+
+const VerifyEmailPage = ({ status }: PageProps) => {
     return (
         <>
             <Head title="Verify Email" />
@@ -57,4 +64,10 @@ export default function VerifyEmail({ status }: { status?: string }) {
             </Card>
         </>
     );
-}
+};
+
+VerifyEmailPage.layout = (page: ReactElement<PageProps>) => {
+    return <GuestLayout>{page}</GuestLayout>;
+};
+
+export default VerifyEmailPage;

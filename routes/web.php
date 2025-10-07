@@ -19,6 +19,7 @@ use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\Settings\TwoFactorAuthenticationController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::get('/', HomeController::class)->name('home');
 
@@ -106,6 +107,10 @@ Route::middleware(['auth', 'organization.selected'])->group(function () {
                 ->middleware('throttle:6,1')
                 ->name('verification.send');
         });
+
+        Route::get('settings/appearance', function () {
+            return Inertia::render('settings/appearance');
+        })->name('appearance.edit');
     });
 
     Route::delete('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');

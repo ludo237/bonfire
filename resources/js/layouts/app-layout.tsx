@@ -6,7 +6,7 @@ import {
     SidebarProvider,
     SidebarTrigger,
 } from '@/components/ui/sidebar';
-import { Head, router } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import { ReactNode } from 'react';
 
 export default function AppLayout({
@@ -18,17 +18,13 @@ export default function AppLayout({
     title?: string;
     breadcrumbs?: BreadcrumbSegment[];
 }) {
-    const handleLogout = () => {
-        router.delete('/logout');
-    };
-
     return (
         <>
             {title && <Head title={title} />}
             <SidebarProvider>
                 <AppSidebar />
                 <SidebarInset>
-                    <header className="sticky top-0 flex shrink-0 items-center gap-2 border-b bg-background p-6">
+                    <header className="flex h-16 shrink-0 items-center gap-2 px-4">
                         <SidebarTrigger className="-ml-1" />
                         <Separator
                             orientation="vertical"

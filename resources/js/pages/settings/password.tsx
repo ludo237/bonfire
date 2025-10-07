@@ -8,9 +8,14 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import SettingsLayout from '@/layouts/settings-layout';
+import { SharedPageProps } from '@/types/inertia';
 import { Form, Head } from '@inertiajs/react';
+import { ReactElement } from 'react';
 
-export default function PasswordSettings() {
+interface PageProps extends SharedPageProps {}
+
+const PasswordSettingsPage = () => {
     return (
         <>
             <Head title="Change Password" />
@@ -82,4 +87,10 @@ export default function PasswordSettings() {
             </Card>
         </>
     );
-}
+};
+
+PasswordSettingsPage.layout = (page: ReactElement<PageProps>) => {
+    return <SettingsLayout>{page}</SettingsLayout>;
+};
+
+export default PasswordSettingsPage;

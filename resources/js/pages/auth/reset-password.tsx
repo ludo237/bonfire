@@ -9,15 +9,17 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import GuestLayout from '@/layouts/guest-layout';
+import { SharedPageProps } from '@/types/inertia';
 import { Form, Head } from '@inertiajs/react';
+import { ReactElement } from 'react';
 
-export default function ResetPassword({
-    token,
-    email,
-}: {
+interface PageProps extends SharedPageProps {
     token: string;
     email: string;
-}) {
+}
+
+const ResetPasswordPage = ({ token, email }: PageProps) => {
     return (
         <>
             <Head title="Reset Password" />
@@ -96,4 +98,10 @@ export default function ResetPassword({
             </Card>
         </>
     );
-}
+};
+
+ResetPasswordPage.layout = (page: ReactElement<PageProps>) => {
+    return <GuestLayout>{page}</GuestLayout>;
+};
+
+export default ResetPasswordPage;

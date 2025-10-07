@@ -9,9 +9,16 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import GuestLayout from '@/layouts/guest-layout';
+import { SharedPageProps } from '@/types/inertia';
 import { Form, Head } from '@inertiajs/react';
+import { ReactElement } from 'react';
 
-export default function ForgotPassword({ status }: { status?: string }) {
+interface PageProps extends SharedPageProps {
+    status?: string;
+}
+
+const ForgotPasswordPage = ({ status }: PageProps) => {
     return (
         <>
             <Head title="Forgot Password" />
@@ -68,4 +75,10 @@ export default function ForgotPassword({ status }: { status?: string }) {
             </Card>
         </>
     );
-}
+};
+
+ForgotPasswordPage.layout = (page: ReactElement<PageProps>) => {
+    return <GuestLayout>{page}</GuestLayout>;
+};
+
+export default ForgotPasswordPage;

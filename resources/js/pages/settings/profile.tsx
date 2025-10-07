@@ -9,10 +9,14 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import { useConfirmAction } from '@/hooks/use-confirm-action';
+import SettingsLayout from '@/layouts/settings-layout';
 import { SharedPageProps } from '@/types/inertia';
 import { Form, Head, router, usePage } from '@inertiajs/react';
+import { ReactElement } from 'react';
 
-export default function ProfileSettings() {
+interface PageProps extends SharedPageProps {}
+
+const ProfileSettingsPage = () => {
     const user: User = usePage<SharedPageProps>().props.auth.user!.data;
     const { confirm } = useConfirmAction();
 
@@ -85,4 +89,10 @@ export default function ProfileSettings() {
             </div>
         </>
     );
-}
+};
+
+ProfileSettingsPage.layout = (page: ReactElement<PageProps>) => {
+    return <SettingsLayout>{page}</SettingsLayout>;
+};
+
+export default ProfileSettingsPage;

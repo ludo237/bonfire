@@ -16,7 +16,7 @@ interface PageProps extends SharedPageProps {
     organizations: EloquentResource<Organization[]>;
 }
 
-const CheckIn = ({ organizations }: PageProps) => {
+const CheckInPage = ({ organizations }: PageProps) => {
     return (
         <>
             <Head title="Select Organization" />
@@ -111,4 +111,4 @@ const CheckIn = ({ organizations }: PageProps) => {
     );
 };
 
-export default CheckIn;
+export default CheckInPage;

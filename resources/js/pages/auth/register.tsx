@@ -8,9 +8,14 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
+import GuestLayout from '@/layouts/guest-layout';
+import { SharedPageProps } from '@/types/inertia';
 import { Form, Head } from '@inertiajs/react';
+import { ReactElement } from 'react';
 
-export default function Register() {
+interface PageProps extends SharedPageProps {}
+
+const RegisterPage = () => {
     return (
         <>
             <Head title="Register" />
@@ -71,4 +76,10 @@ export default function Register() {
             </Card>
         </>
     );
-}
+};
+
+RegisterPage.layout = (page: ReactElement<PageProps>) => {
+    return <GuestLayout>{page}</GuestLayout>;
+};
+
+export default RegisterPage;

@@ -6,11 +6,15 @@ import {
     InputOTPSlot,
 } from '@/components/ui/input-otp';
 import { OTP_MAX_LENGTH } from '@/hooks/use-two-factor-auth';
+import GuestLayout from '@/layouts/guest-layout';
+import { SharedPageProps } from '@/types/inertia';
 import { Form, Head } from '@inertiajs/react';
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
-import { useMemo, useState } from 'react';
+import { ReactElement, useMemo, useState } from 'react';
 
-export default function TwoFactorChallenge() {
+interface PageProps extends SharedPageProps {}
+
+const TwoFactorChallengePage = () => {
     const [showRecoveryInput, setShowRecoveryInput] = useState<boolean>(false);
     const [code, setCode] = useState<string>('');
 
@@ -127,4 +131,10 @@ export default function TwoFactorChallenge() {
             </div>
         </>
     );
-}
+};
+
+TwoFactorChallengePage.layout = (page: ReactElement<PageProps>) => {
+    return <GuestLayout>{page}</GuestLayout>;
+};
+
+export default TwoFactorChallengePage;

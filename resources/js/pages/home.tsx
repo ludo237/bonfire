@@ -6,11 +6,14 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
+import { SharedPageProps } from '@/types/inertia';
 import AuthenticatedSessionController from '@/wayfinder/actions/App/Http/Controllers/Auth/AuthenticatedSessionController';
 import RegisteredUserController from '@/wayfinder/actions/App/Http/Controllers/Auth/RegisteredUserController';
 import { Head, Link } from '@inertiajs/react';
 
-export default function Home() {
+interface PageProps extends SharedPageProps {}
+
+const HomePage = () => {
     return (
         <>
             <Head title="Home to Bonefire" />
@@ -51,4 +54,6 @@ export default function Home() {
             </div>
         </>
     );
-}
+};
+
+export default HomePage;

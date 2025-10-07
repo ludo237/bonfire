@@ -9,9 +9,16 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import GuestLayout from '@/layouts/guest-layout';
+import { SharedPageProps } from '@/types/inertia';
 import { Form, Head } from '@inertiajs/react';
+import { ReactElement } from 'react';
 
-export default function Join({ code }: { code: string }) {
+interface PageProps extends SharedPageProps {
+    code: string;
+}
+
+const JoinPage = ({ code }: PageProps) => {
     return (
         <>
             <Head title="Join Team" />
@@ -102,4 +109,10 @@ export default function Join({ code }: { code: string }) {
             </Card>
         </>
     );
-}
+};
+
+JoinPage.layout = (page: ReactElement<PageProps>) => {
+    return <GuestLayout>{page}</GuestLayout>;
+};
+
+export default JoinPage;
