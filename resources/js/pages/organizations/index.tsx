@@ -1,36 +1,72 @@
+import { DataTableSection } from '@/components/organization/data-table-section';
+import { InviteMemberCard } from '@/components/organization/invite-member-card';
+import { LatestMessagesCard } from '@/components/organization/latest-messages-card';
+import { StatsCard } from '@/components/organization/stats-card';
 import { PageHeader } from '@/components/page-header';
-import { RoomCard } from '@/components/room-card';
+import AppLayout from '@/layouts/app-layout';
+import { SharedPageProps } from '@/types/inertia';
 import { Head } from '@inertiajs/react';
+import { ReactElement } from 'react';
+import { memberColumns } from './columns/member-columns';
+import { roomColumns } from './columns/room-columns';
 
-interface OrganizationsIndexProps {
+interface PageProps extends SharedPageProps {
     organization: EloquentResource<Organization>;
+    latestMessages: EloquentResource<Message[]>;
+    stats: {
+        totalMessages: number;
+        totalMembers: number;
+        totalRooms: number;
+    };
+    members: EloquentResource<User[]>;
     rooms: EloquentResource<Room[]>;
 }
 
-export default function OrganizationsIndex({
+const OrganizationIndexPage = ({
     organization,
+    latestMessages,
+    stats,
+    members,
     rooms,
-}: OrganizationsIndexProps) {
+}: PageProps) => {
     return (
         <>
             <Head title={organization.data.name} />
             <div className="flex flex-1 flex-col overflow-hidden">
-                <PageHeader title="Rooms" />
+                <PageHeader title={organization.data.name} />
 
                 <div className="flex-1 overflow-y-auto">
-                    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                        {rooms.data.map((room) => (
-                            <RoomCard key={room.id} room={room} />
-                        ))}
+                    <div className="space-y-6">
+                        <div className="grid gap-6 md:grid-cols-3">
+                            <LatestMessagesCard
+                                messages={latestMessages.data}
+                            />
+                            <StatsCard stats={stats} />
+                            <InviteMemberCard />
+                        </div>
 
-                        {rooms.data.length === 0 && (
-                            <div className="col-span-full text-center text-muted-foreground">
-                                No rooms yet. Create one to get started!
-                            </div>
-                        )}
+                        <div className="grid gap-6 lg:grid-cols-2">
+                            <DataTableSection
+                                title="Members"
+                                columns={memberColumns}
+                                data={members}
+                            />
+
+                            <DataTableSection
+                                title="Rooms"
+                                columns={roomColumns}
+                                data={rooms}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
         </>
     );
-}
+};
+
+OrganizationIndexPage.layout = (page: ReactElement<PageProps>) => {
+    return <AppLayout>{page}</AppLayout>;
+};
+
+export default OrganizationIndexPage;

@@ -30,10 +30,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
-                        <SidebarMenuButton
-                            size="lg"
-                            asChild
-                        >
+                        <SidebarMenuButton size="lg" asChild>
                             <Link
                                 href={OrganizationController.show(
                                     organization.id,
@@ -70,10 +67,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     <SidebarGroupContent>
                         <SidebarMenu>
                             {rooms.map((room) => (
-                                <SidebarRoomItem
-                                    key={room.id}
-                                    room={room}
-                                />
+                                <SidebarRoomItem key={room.id} room={room} />
                             ))}
                         </SidebarMenu>
                         {rooms.length === 0 && (

@@ -11,13 +11,12 @@ import { SharedPageProps } from '@/types/inertia';
 import CheckInController from '@/wayfinder/actions/App/Http/Controllers/CheckInController';
 import { Form, Head } from '@inertiajs/react';
 import { MessageSquare, Users } from 'lucide-react';
-import { FC } from 'react';
 
 interface PageProps extends SharedPageProps {
     organizations: EloquentResource<Organization[]>;
 }
 
-const CheckIn: FC<PageProps> = ({ organizations }) => {
+const CheckIn = ({ organizations }: PageProps) => {
     return (
         <>
             <Head title="Select Organization" />

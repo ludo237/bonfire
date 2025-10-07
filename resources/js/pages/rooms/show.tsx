@@ -6,16 +6,17 @@ import { Button } from '@/components/ui/button';
 import { useMessages } from '@/hooks/use-messages';
 import { useRoomPresence } from '@/hooks/use-room-presence';
 import { useTypingIndicator } from '@/hooks/use-typing-indicator';
+import AppLayout from '@/layouts/app-layout';
 import { SharedPageProps } from '@/types/inertia';
 import RoomController from '@/wayfinder/actions/App/Http/Controllers/RoomController';
-import { Link, usePage } from '@inertiajs/react';
-import { Head } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
+import { ReactElement } from 'react';
 
 interface PageProps extends SharedPageProps {
     room: EloquentResource<Room>;
 }
 
-export default function ShowRoom({ room: roomResource }: PageProps) {
+const RoomShowPage = ({ room: roomResource }: PageProps) => {
     const { auth } = usePage<SharedPageProps>().props;
     const room = roomResource.data;
     const { messages, messageBody, setMessageBody, sendMessage } =
@@ -36,9 +37,7 @@ export default function ShowRoom({ room: roomResource }: PageProps) {
                     title={room.name}
                     description={`${onlineUsers.length} online • ${room.messages.length} messages`}
                     actions={
-                        <Link
-                            href={RoomController.show(room.id)}
-                        >
+                        <Link href={RoomController.show(room.id)}>
                             <Button variant="outline">Settings</Button>
                         </Link>
                     }
@@ -57,4 +56,10 @@ export default function ShowRoom({ room: roomResource }: PageProps) {
             </div>
         </>
     );
-}
+};
+
+RoomShowPage.layout = (page: ReactElement<PageProps>) => {
+    return <AppLayout>{page}</AppLayout>;
+};
+
+export default RoomShowPage;

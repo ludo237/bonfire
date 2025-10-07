@@ -8,15 +8,17 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
+import GuestLayout from '@/layouts/guest-layout';
+import { SharedPageProps } from '@/types/inertia';
 import { Form, Head, Link } from '@inertiajs/react';
+import { ReactElement } from 'react';
 
-export default function Login({
-    canResetPassword,
-    status,
-}: {
+interface PageProps extends SharedPageProps {
     canResetPassword: boolean;
     status?: string;
-}) {
+}
+
+const LoginPage = ({ canResetPassword, status }: PageProps) => {
     return (
         <>
             <Head title="Login" />
@@ -78,4 +80,10 @@ export default function Login({
             </Card>
         </>
     );
-}
+};
+
+LoginPage.layout = (page: ReactElement<PageProps>) => {
+    return <GuestLayout>{page}</GuestLayout>;
+};
+
+export default LoginPage;

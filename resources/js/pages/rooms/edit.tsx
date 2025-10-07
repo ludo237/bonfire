@@ -10,9 +10,15 @@ import {
 } from '@/components/ui/card';
 import { useConfirmAction } from '@/hooks/use-confirm-action';
 import AppLayout from '@/layouts/app-layout';
-import { router, useForm } from '@inertiajs/react';
+import { SharedPageProps } from '@/types/inertia';
+import { Head, router, useForm } from '@inertiajs/react';
+import { ReactElement } from 'react';
 
-export default function EditRoom({ room }: { room: EloquentResource<Room> }) {
+interface PageProps extends SharedPageProps {
+    room: EloquentResource<Room>;
+}
+
+const RoomEditPage = ({ room }: PageProps) => {
     const roomData = room.data;
     const { data, setData, patch, processing, errors } = useForm({
         name: roomData.name,
@@ -31,7 +37,8 @@ export default function EditRoom({ room }: { room: EloquentResource<Room> }) {
     };
 
     return (
-        <AppLayout title="Edit Room">
+        <>
+            <Head title="Edit Room" />
             <div className="flex flex-1 items-center justify-center p-6">
                 <div className="w-full max-w-md space-y-6">
                     <Card>
@@ -73,6 +80,12 @@ export default function EditRoom({ room }: { room: EloquentResource<Room> }) {
                     />
                 </div>
             </div>
-        </AppLayout>
+        </>
     );
-}
+};
+
+RoomEditPage.layout = (page: ReactElement<PageProps>) => {
+    return <AppLayout>{page}</AppLayout>;
+};
+
+export default RoomEditPage;

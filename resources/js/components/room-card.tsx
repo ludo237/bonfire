@@ -4,10 +4,9 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-import { Link, usePage } from '@inertiajs/react';
-import { Hash, Lock, User } from 'lucide-react';
-import { SharedPageProps } from '@/types/inertia';
 import RoomController from '@/wayfinder/actions/App/Http/Controllers/RoomController';
+import { Link } from '@inertiajs/react';
+import { Hash, Lock, User } from 'lucide-react';
 
 interface RoomCardProps {
     room: Room;
@@ -40,8 +39,6 @@ const getRoomTypeLabel = (roomType: string) => {
 };
 
 export function RoomCard({ room }: RoomCardProps) {
-    const { auth } = usePage<SharedPageProps>().props;
-    const organization = auth.currentOrganization?.data;
     const Icon = getRoomIcon(room.type);
     const roomTypeLabel = getRoomTypeLabel(room.type);
     const messageCount = room.counts?.messages ?? 0;
@@ -49,7 +46,6 @@ export function RoomCard({ room }: RoomCardProps) {
     return (
         <Link
             href={RoomController.show({
-                organization: organization?.id,
                 room: room.id,
             })}
         >

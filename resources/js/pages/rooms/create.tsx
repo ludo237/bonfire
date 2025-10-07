@@ -10,9 +10,13 @@ import {
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import AppLayout from '@/layouts/app-layout';
-import { useForm } from '@inertiajs/react';
+import { SharedPageProps } from '@/types/inertia';
+import { Head, useForm } from '@inertiajs/react';
+import { ReactElement } from 'react';
 
-export default function CreateRoom() {
+interface PageProps extends SharedPageProps {}
+
+const RoomCreatePage = () => {
     const { data, setData, post, processing, errors } = useForm({
         name: '',
         type: 'public',
@@ -24,7 +28,8 @@ export default function CreateRoom() {
     };
 
     return (
-        <AppLayout title="Create Room">
+        <>
+            <Head title="Create Room" />
             <div className="flex flex-1 items-center justify-center p-6">
                 <Card className="w-full max-w-md">
                     <CardHeader>
@@ -99,6 +104,12 @@ export default function CreateRoom() {
                     </form>
                 </Card>
             </div>
-        </AppLayout>
+        </>
     );
-}
+};
+
+RoomCreatePage.layout = (page: ReactElement<PageProps>) => {
+    return <AppLayout>{page}</AppLayout>;
+};
+
+export default RoomCreatePage;

@@ -14,19 +14,11 @@ import {
     SidebarMenuItem,
     useSidebar,
 } from '@/components/ui/sidebar';
-import {
-    BadgeCheck,
-    Bell,
-    ChevronsUpDown,
-    CreditCard,
-    LogOut,
-    Sparkles,
-    UserCog,
-} from 'lucide-react';
-import { FC } from 'react';
-import { Link } from '@inertiajs/react';
-import AuthenticatedSessionController from '@/wayfinder/actions/Laravel/Fortify/Http/Controllers/AuthenticatedSessionController';
 import ProfileController from '@/wayfinder/actions/App/Http/Controllers/Settings/ProfileController';
+import AuthenticatedSessionController from '@/wayfinder/actions/Laravel/Fortify/Http/Controllers/AuthenticatedSessionController';
+import { Link } from '@inertiajs/react';
+import { ChevronsUpDown, LogOut, UserCog } from 'lucide-react';
+import { FC } from 'react';
 
 const SidebarNavUser: FC<{ user: User }> = ({ user }) => {
     const { isMobile } = useSidebar();
@@ -93,7 +85,10 @@ const SidebarNavUser: FC<{ user: User }> = ({ user }) => {
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>
                             <LogOut />
-                            <Link href={AuthenticatedSessionController.destroy()} method="delete">
+                            <Link
+                                href={AuthenticatedSessionController.destroy()}
+                                method="delete"
+                            >
                                 Logout
                             </Link>
                         </DropdownMenuItem>

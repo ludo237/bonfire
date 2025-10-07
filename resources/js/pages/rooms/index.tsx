@@ -1,12 +1,15 @@
 import { PageHeader } from '@/components/page-header';
 import { RoomCard } from '@/components/room-card';
+import AppLayout from '@/layouts/app-layout';
+import { SharedPageProps } from '@/types/inertia';
 import { Head } from '@inertiajs/react';
+import { ReactElement } from 'react';
 
-export default function RoomsIndex({
-    rooms,
-}: {
+interface PageProps extends SharedPageProps {
     rooms: EloquentResource<Room[]>;
-}) {
+}
+
+const RoomsIndexPage = ({ rooms }: PageProps) => {
     return (
         <>
             <Head title="Rooms" />
@@ -29,4 +32,10 @@ export default function RoomsIndex({
             </div>
         </>
     );
-}
+};
+
+RoomsIndexPage.layout = (page: ReactElement<PageProps>) => {
+    return <AppLayout>{page}</AppLayout>;
+};
+
+export default RoomsIndexPage;

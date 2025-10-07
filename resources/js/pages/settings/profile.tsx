@@ -13,7 +13,7 @@ import { SharedPageProps } from '@/types/inertia';
 import { Form, Head, router, usePage } from '@inertiajs/react';
 
 export default function ProfileSettings() {
-    const user: User = usePage<SharedPageProps>().props.auth.user?.data;
+    const user: User = usePage<SharedPageProps>().props.auth.user!.data;
     const { confirm } = useConfirmAction();
 
     const handleDelete = () => {
@@ -63,7 +63,7 @@ export default function ProfileSettings() {
                                 <TextareaField
                                     label="Bio"
                                     name="bio"
-                                    defaultValue={user.bio || ''}
+                                    defaultValue={user.biography || ''}
                                     placeholder="Tell us about yourself..."
                                     rows={3}
                                     error={errors.bio}
