@@ -1,18 +1,16 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import GuestLayout from '@/layouts/guest-layout';
-import { store } from '@/routes/password/confirm';
 import { Form, Head } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
+import ConfirmablePasswordController from '@/wayfinder/actions/Laravel/Fortify/Http/Controllers/ConfirmablePasswordController';
 
 export default function ConfirmPassword() {
     return (
-        <GuestLayout title="Confirm your password">
-            <Head title="Confirm password" />
-
+        <>
+            <Head title="Confirm Password" />
             <Form
-                {...store.post()}
+                action={ConfirmablePasswordController.store()}
                 disableWhileProcessing
                 resetOnSuccess={['password']}
             >
@@ -51,6 +49,6 @@ export default function ConfirmPassword() {
                     </div>
                 )}
             </Form>
-        </GuestLayout>
+        </>
     );
 }

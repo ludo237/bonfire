@@ -1,10 +1,10 @@
-import { User } from '@/types/models';
 import { PageProps } from '@inertiajs/core';
 
 export interface SharedPageProps extends PageProps {
-    csrf_token: string;
+    csrf: string;
     auth: {
         user: EloquentResource<User> | null;
+        currentOrganization: EloquentResource<Organization> | null;
     };
     flash: {
         message: string | null;

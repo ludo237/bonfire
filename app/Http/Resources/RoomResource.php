@@ -28,6 +28,7 @@ class RoomResource extends JsonResource
             'users' => UserResource::collection($this->whenLoaded('users')),
             'counts' => [
                 'messages' => $this->whenCounted(relationship: 'messages', default: 0),
+                'users' => $this->whenCounted(relationship: 'users', default: 0),
             ],
             'createdAt' => $this->getAttributeValue('created_at'),
             'updatedAt' => $this->getAttributeValue('updated_at'),

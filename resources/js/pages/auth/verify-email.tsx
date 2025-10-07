@@ -6,12 +6,12 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-import GuestLayout from '@/layouts/guest-layout';
-import { Form, Link } from '@inertiajs/react';
+import { Form, Head, Link } from '@inertiajs/react';
 
 export default function VerifyEmail({ status }: { status?: string }) {
     return (
-        <GuestLayout title="Verify Email">
+        <>
+            <Head title="Verify Email" />
             <Card>
                 <CardHeader>
                     <CardTitle>Verify Email</CardTitle>
@@ -55,6 +55,6 @@ export default function VerifyEmail({ status }: { status?: string }) {
                     </Link>
                 </CardContent>
             </Card>
-        </GuestLayout>
+        </>
     );
 }

@@ -6,7 +6,6 @@ import {
     InputOTPSlot,
 } from '@/components/ui/input-otp';
 import { OTP_MAX_LENGTH } from '@/hooks/use-two-factor-auth';
-import GuestLayout from '@/layouts/guest-layout';
 import { Form, Head } from '@inertiajs/react';
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
 import { useMemo, useState } from 'react';
@@ -44,9 +43,8 @@ export default function TwoFactorChallenge() {
     };
 
     return (
-        <GuestLayout title={authConfigContent.title}>
+        <>
             <Head title="Two-Factor Authentication" />
-
             <div className="space-y-6">
                 <Form
                     action=""
@@ -127,6 +125,6 @@ export default function TwoFactorChallenge() {
                     )}
                 </Form>
             </div>
-        </GuestLayout>
+        </>
     );
 }

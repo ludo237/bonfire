@@ -9,12 +9,20 @@ interface SoftDeleteModel {
 }
 
 interface User extends IModel, SoftDeleteModel {
-    role: UserRole;
     name: string;
-    bio: string;
+    biography: string;
     email: string;
     emailVerifiedAt: string | null;
-    bot_token?: string | null;
+}
+
+interface Organization extends IModel {
+    name: string;
+    members: User[];
+    rooms: Room[];
+    counts: {
+        members: number;
+        rooms: number;
+    };
 }
 
 interface Room extends IModel {
@@ -27,6 +35,7 @@ interface Room extends IModel {
     messages: Message[];
     counts: {
         messages: number;
+        users: number;
     };
 }
 

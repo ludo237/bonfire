@@ -8,12 +8,12 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import SettingsLayout from '@/layouts/settings-layout';
-import { Form } from '@inertiajs/react';
+import { Form, Head } from '@inertiajs/react';
 
 export default function PasswordSettings() {
     return (
-        <SettingsLayout title="Change Password">
+        <>
+            <Head title="Change Password" />
             <Card>
                 <CardHeader>
                     <CardTitle>Change Password</CardTitle>
@@ -80,6 +80,6 @@ export default function PasswordSettings() {
                     )}
                 </Form>
             </Card>
-        </SettingsLayout>
+        </>
     );
 }

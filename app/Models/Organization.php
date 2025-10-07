@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Ludo237\Traits\ExposeTableProperties;
 
 class Organization extends Model
@@ -27,5 +28,10 @@ class Organization extends Model
             )
             ->using(OrganizationUser::class)
             ->withPivot(['role', 'joined_at']);
+    }
+
+    public function rooms(): HasMany
+    {
+        return $this->hasMany(Room::class);
     }
 }

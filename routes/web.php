@@ -9,18 +9,20 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\CheckInController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JoinController;
 use App\Http\Controllers\MembershipController;
+use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\Settings\TwoFactorAuthenticationController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('guest')->group(function () {
-    Route::get('/', HomeController::class)->name('home');
+Route::get('/', HomeController::class)->name('home');
 
+Route::middleware('guest')->group(function () {
     Route::prefix('register')->group(function () {
         Route::get('', [RegisteredUserController::class, 'create'])->name('register');
         Route::post('', [RegisteredUserController::class, 'store'])->name('register.store');
@@ -49,16 +51,33 @@ Route::prefix('join')->group(function () {
     });
 });
 
-Route::middleware(['auth', 'active'])->group(function () {
-    Route::resource('rooms', RoomController::class);
+Route::middleware(['auth'])->group(function () {
+    Route::prefix('check-in')->group(function () {
+        Route::get('', [CheckInController::class, 'index'])->name('check-in.index');
+        Route::post('', [CheckInController::class, 'store'])->name('check-in.store');
+    });
+});
 
-    Route::prefix('rooms/{room}')->group(function () {
-        Route::prefix('members')->group(function () {
-            Route::post('', [MembershipController::class, 'store'])->name('rooms.members.store');
-            Route::delete('', [MembershipController::class, 'destroy'])->name('rooms.members.destroy');
+Route::middleware(['auth', 'organization.selected'])->group(function () {
+    Route::prefix('organizations')->group(function () {
+        Route::prefix('{organization}')->group(function () {
+            Route::get('', [OrganizationController::class, 'show'])->name('organizations.show');
         });
+    });
 
-        Route::patch('membership', [MembershipController::class, 'update'])->name('rooms.membership.update');
+    Route::prefix('rooms')->group(function () {
+        Route::get('', [RoomController::class, 'index'])->name('rooms.index');
+
+        Route::prefix('{room}')->group(function () {
+            Route::get('', [RoomController::class, 'show'])->name('rooms.show');
+
+            Route::prefix('members')->group(function () {
+                Route::post('', [MembershipController::class, 'store'])->name('rooms.members.store');
+                Route::delete('', [MembershipController::class, 'destroy'])->name('rooms.members.destroy');
+            });
+
+            Route::patch('membership', [MembershipController::class, 'update'])->name('rooms.membership.update');
+        });
     });
 
     Route::prefix('users/me')->group(function () {

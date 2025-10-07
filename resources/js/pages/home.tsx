@@ -6,9 +6,9 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-import { Head, Link } from '@inertiajs/react';
 import AuthenticatedSessionController from '@/wayfinder/actions/App/Http/Controllers/Auth/AuthenticatedSessionController';
 import RegisteredUserController from '@/wayfinder/actions/App/Http/Controllers/Auth/RegisteredUserController';
+import { Head, Link } from '@inertiajs/react';
 
 export default function Home() {
     return (
@@ -28,7 +28,10 @@ export default function Home() {
                             collaborate, and stay in sync.
                         </p>
                         <div className="space-y-2">
-                            <Link href={AuthenticatedSessionController.create()} className="block">
+                            <Link
+                                href={AuthenticatedSessionController.create()}
+                                className="block"
+                            >
                                 <Button className="w-full" size="lg">
                                     Sign In
                                 </Button>

@@ -9,12 +9,12 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import GuestLayout from '@/layouts/guest-layout';
-import { Form } from '@inertiajs/react';
+import { Form, Head } from '@inertiajs/react';
 
 export default function ForgotPassword({ status }: { status?: string }) {
     return (
-        <GuestLayout title="Forgot Password">
+        <>
+            <Head title="Forgot Password" />
             <Card>
                 <CardHeader>
                     <CardTitle>Forgot Password</CardTitle>
@@ -66,6 +66,6 @@ export default function ForgotPassword({ status }: { status?: string }) {
                     )}
                 </Form>
             </Card>
-        </GuestLayout>
+        </>
     );
 }

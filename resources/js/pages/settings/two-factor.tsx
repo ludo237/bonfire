@@ -8,9 +8,8 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import SettingsLayout from '@/layouts/settings-layout';
-import { router, useForm } from '@inertiajs/react';
-import { useState } from 'react';
+import { Head, router, useForm } from '@inertiajs/react';
+import { FormEvent, useState } from 'react';
 
 export default function TwoFactorSettings({
     twoFactorEnabled,
@@ -42,13 +41,14 @@ export default function TwoFactorSettings({
         }
     };
 
-    const confirmEnabling = (e: React.FormEvent) => {
+    const confirmEnabling = (e: FormEvent) => {
         e.preventDefault();
         post('/user/confirmed-two-factor-authentication');
     };
 
     return (
-        <SettingsLayout title="Two-Factor Authentication">
+        <>
+            <Head title="Two-Factor Authentication" />
             <Card>
                 <CardHeader>
                     <CardTitle>Two-Factor Authentication</CardTitle>
@@ -132,6 +132,6 @@ export default function TwoFactorSettings({
                     )}
                 </CardContent>
             </Card>
-        </SettingsLayout>
+        </>
     );
 }

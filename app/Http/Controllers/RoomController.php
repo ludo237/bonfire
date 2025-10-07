@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Resources\RoomResource;
+use App\Models\Organization;
 use App\Models\Room;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
@@ -21,7 +22,11 @@ class RoomController extends Controller
         /** @var User $user */
         $user = $request->user();
 
+        // Get current organization from session cache
+        $organizationId = $request->session()->cache()->get('current_organization_id');
+
         $rooms = Room::query()
+            ->where('organization_id', $organizationId)
             ->with('organization')
             ->withCount(['messages'])
             ->whereHas('users', fn (Builder $q) => $q->whereKey($user->getKey()))
@@ -33,7 +38,7 @@ class RoomController extends Controller
         ]);
     }
 
-    public function show(Request $request, Room $room): Response
+    public function show(Request $request, Organization $organization, Room $room): Response
     {
         Gate::authorize('view', $room);
 
@@ -60,11 +65,15 @@ class RoomController extends Controller
             'type' => ['required', 'in:public,private'],
         ]);
 
+        // Get current organization from session cache
+        $organizationId = $request->session()->cache()->get('current_organization_id');
+
         /** @var Room $room */
         $room = Room::query()->create([
             'name' => $validated['name'],
             'type' => $validated['type'],
             'owner_id' => $request->user()->getKey(),
+            'organization_id' => $organizationId,
         ]);
 
         $room->grantAccessTo([$request->user()]);

@@ -9,9 +9,8 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import { useConfirmAction } from '@/hooks/use-confirm-action';
-import SettingsLayout from '@/layouts/settings-layout';
 import { SharedPageProps } from '@/types/inertia';
-import { Form, router, usePage } from '@inertiajs/react';
+import { Form, Head, router, usePage } from '@inertiajs/react';
 
 export default function ProfileSettings() {
     const user: User = usePage<SharedPageProps>().props.auth.user?.data;
@@ -27,7 +26,8 @@ export default function ProfileSettings() {
     };
 
     return (
-        <SettingsLayout title="Profile Settings">
+        <>
+            <Head title="Profile Settings" />
             <div className="space-y-6">
                 <Card>
                     <CardHeader>
@@ -83,6 +83,6 @@ export default function ProfileSettings() {
                     onAction={handleDelete}
                 />
             </div>
-        </SettingsLayout>
+        </>
     );
 }

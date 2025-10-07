@@ -21,9 +21,8 @@ class UserResource extends JsonResource
         return [
             'id' => $this->getKey(),
             'name' => $this->getAttributeValue('name'),
-            'bio' => $this->getAttributeValue('biography'),
+            'biography' => $this->getAttributeValue('biography'),
             'email' => $this->getAttributeValue('email'),
-            'role' => $this->getAttributeValue('role'),
             'emailVerifiedAt' => $this->getAttributeValue('email_verified_at'),
             'initials' => $this->getAttributeValue('initials'),
             'createdAt' => $this->getAttributeValue('created_at'),

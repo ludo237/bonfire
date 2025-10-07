@@ -9,12 +9,12 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import GuestLayout from '@/layouts/guest-layout';
-import { Form } from '@inertiajs/react';
+import { Form, Head } from '@inertiajs/react';
 
 export default function Join({ code }: { code: string }) {
     return (
-        <GuestLayout title="Join Team">
+        <>
+            <Head title="Join Team" />
             <Card>
                 <CardHeader>
                     <CardTitle>Join Team</CardTitle>
@@ -100,6 +100,6 @@ export default function Join({ code }: { code: string }) {
                     )}
                 </Form>
             </Card>
-        </GuestLayout>
+        </>
     );
 }

@@ -8,12 +8,12 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-import GuestLayout from '@/layouts/guest-layout';
-import { Form } from '@inertiajs/react';
+import { Form, Head } from '@inertiajs/react';
 
 export default function Register() {
     return (
-        <GuestLayout title="Register">
+        <>
+            <Head title="Register" />
             <Card>
                 <CardHeader>
                     <CardTitle>Create Account</CardTitle>
@@ -69,6 +69,6 @@ export default function Register() {
                     )}
                 </Form>
             </Card>
-        </GuestLayout>
+        </>
     );
 }

@@ -2,14 +2,18 @@ import { PageHeader } from '@/components/page-header';
 import { RoomCard } from '@/components/room-card';
 import { Head } from '@inertiajs/react';
 
-export default function RoomsIndex({
-    rooms,
-}: {
+interface OrganizationsIndexProps {
+    organization: EloquentResource<Organization>;
     rooms: EloquentResource<Room[]>;
-}) {
+}
+
+export default function OrganizationsIndex({
+    organization,
+    rooms,
+}: OrganizationsIndexProps) {
     return (
         <>
-            <Head title="Rooms" />
+            <Head title={organization.data.name} />
             <div className="flex flex-1 flex-col overflow-hidden">
                 <PageHeader title="Rooms" />
 

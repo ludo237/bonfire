@@ -47,7 +47,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('rooms.index', absolute: false));
+        return redirect()->intended(route(name: 'check-in.index', absolute: false));
     }
 
     /**

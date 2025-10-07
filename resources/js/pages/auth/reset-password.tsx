@@ -9,8 +9,7 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import GuestLayout from '@/layouts/guest-layout';
-import { Form } from '@inertiajs/react';
+import { Form, Head } from '@inertiajs/react';
 
 export default function ResetPassword({
     token,
@@ -20,7 +19,8 @@ export default function ResetPassword({
     email: string;
 }) {
     return (
-        <GuestLayout title="Reset Password">
+        <>
+            <Head title="Reset Password" />
             <Card>
                 <CardHeader>
                     <CardTitle>Reset Password</CardTitle>
@@ -94,6 +94,6 @@ export default function ResetPassword({
                     )}
                 </Form>
             </Card>
-        </GuestLayout>
+        </>
     );
 }

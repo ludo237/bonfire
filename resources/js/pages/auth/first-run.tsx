@@ -8,15 +8,15 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-import GuestLayout from '@/layouts/guest-layout';
-import { Form } from '@inertiajs/react';
+import { Form, Head } from '@inertiajs/react';
 
 export default function FirstRun() {
     return (
-        <GuestLayout title="Home to Bonefire">
+        <>
+            <Head title="Welcome to Bonefire" />
             <Card>
                 <CardHeader>
-                    <CardTitle>Home to Bonefire</CardTitle>
+                    <CardTitle>Welcome to Bonefire</CardTitle>
                     <CardDescription>
                         Let's set up your admin account
                     </CardDescription>
@@ -62,6 +62,6 @@ export default function FirstRun() {
                     )}
                 </Form>
             </Card>
-        </GuestLayout>
+        </>
     );
 }

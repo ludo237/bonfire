@@ -8,8 +8,7 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-import GuestLayout from '@/layouts/guest-layout';
-import { Form, Link } from '@inertiajs/react';
+import { Form, Head, Link } from '@inertiajs/react';
 
 export default function Login({
     canResetPassword,
@@ -19,7 +18,8 @@ export default function Login({
     status?: string;
 }) {
     return (
-        <GuestLayout title="Login">
+        <>
+            <Head title="Login" />
             <Card>
                 <CardHeader>
                     <CardTitle>Sign In</CardTitle>
@@ -76,6 +76,6 @@ export default function Login({
                     )}
                 </Form>
             </Card>
-        </GuestLayout>
+        </>
     );
 }

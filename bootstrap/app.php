@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
+use App\Http\Middleware\EnsureOrganizationSelected;
 use App\Http\Middleware\EnsureUserIsActive;
-use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Http\Middleware\HandleAppearance;
 use App\Http\Middleware\HandleInertiaRequests;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
+use Illuminate\Http\Request;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -23,18 +24,18 @@ return Application::configure(basePath: dirname(__DIR__))
         attributes: ['middleware' => ['web', 'auth']],
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->encryptCookies(except: ['appearance', 'sidebar_state']);
-
-        $middleware->web(append: [
-            HandleAppearance::class,
-            HandleInertiaRequests::class,
-            AddLinkHeadersForPreloadedAssets::class,
-        ]);
-
-        $middleware->alias([
-            'admin' => EnsureUserIsAdmin::class,
-            'active' => EnsureUserIsActive::class,
-        ]);
+        $middleware
+            ->encryptCookies(except: ['appearance', 'sidebar_state'])
+            ->redirectUsersTo(fn (Request $request) => route('check-in.index'))
+            ->web(append: [
+                HandleAppearance::class,
+                HandleInertiaRequests::class,
+                AddLinkHeadersForPreloadedAssets::class,
+            ])
+            ->alias([
+                'active' => EnsureUserIsActive::class,
+                'organization.selected' => EnsureOrganizationSelected::class,
+            ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {})
     ->create();

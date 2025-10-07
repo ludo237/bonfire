@@ -14,7 +14,7 @@ Broadcast::channel('room.{roomId}', function (User $user, string $roomId) {
         return false;
     }
 
-    return $room->users()->where('id', $user->getKey())->exists();
+    return $room->users()->where('users.id', $user->getKey())->exists();
 });
 
 Broadcast::channel('room.{roomId}.presence', function (User $user, string $roomId) {
@@ -25,8 +25,7 @@ Broadcast::channel('room.{roomId}.presence', function (User $user, string $roomI
     }
 
     return [
-        'id' => $user->id,
-        'name' => $user->name,
-        'initials' => $user->initials,
+        'id' => $user->getKey(),
+        'name' => $user->getAttributeValue('name'),
     ];
 });
