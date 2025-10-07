@@ -8,7 +8,6 @@ import {
     SidebarGroupContent,
     SidebarGroupLabel,
     SidebarHeader,
-    SidebarInput,
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
@@ -54,12 +53,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </SidebarMenu>
             </SidebarHeader>
             <SidebarContent>
-                <SidebarGroup>
-                    <SidebarGroupLabel>Search</SidebarGroupLabel>
-                    <SidebarGroupContent>
-                        <SidebarInput placeholder="Search rooms..." />
-                    </SidebarGroupContent>
-                </SidebarGroup>
                 <SidebarGroup>
                     <SidebarGroupLabel>
                         <span>Rooms</span>

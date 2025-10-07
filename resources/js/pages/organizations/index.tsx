@@ -32,10 +32,7 @@ const OrganizationIndexPage = ({
     return (
         <>
             <Head title={organization.data.name} />
-            <div className="flex flex-1 flex-col overflow-hidden">
-                <PageHeader title={organization.data.name} />
-
-                <div className="flex-1 overflow-y-auto">
+            <div className="flex-1 overflow-y-auto">
                     <div className="space-y-6">
                         <div className="grid gap-6 md:grid-cols-3">
                             <LatestMessagesCard
@@ -60,13 +57,12 @@ const OrganizationIndexPage = ({
                         </div>
                     </div>
                 </div>
-            </div>
         </>
     );
 };
 
 OrganizationIndexPage.layout = (page: ReactElement<PageProps>) => {
-    return <AppLayout>{page}</AppLayout>;
+    return <AppLayout title="Your organization">{page}</AppLayout>;
 };
 
 export default OrganizationIndexPage;

@@ -141,7 +141,7 @@ const TwoFactorSettingsPage = ({
 };
 
 TwoFactorSettingsPage.layout = (page: ReactElement<PageProps>) => {
-    return <SettingsLayout>{page}</SettingsLayout>;
+    return <SettingsLayout title="2FA Settings">{page}</SettingsLayout>;
 };
 
 export default TwoFactorSettingsPage;

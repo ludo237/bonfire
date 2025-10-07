@@ -92,7 +92,7 @@ const ProfileSettingsPage = () => {
 };
 
 ProfileSettingsPage.layout = (page: ReactElement<PageProps>) => {
-    return <SettingsLayout>{page}</SettingsLayout>;
+    return <SettingsLayout title="Your profile">{page}</SettingsLayout>;
 };
 
 export default ProfileSettingsPage;

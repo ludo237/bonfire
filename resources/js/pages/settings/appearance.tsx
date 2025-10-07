@@ -30,7 +30,7 @@ const AppearanceSettingsPage = () => {
 };
 
 AppearanceSettingsPage.layout = (page: ReactElement) => {
-    return <SettingsLayout>{page}</SettingsLayout>;
+    return <SettingsLayout title="Preferences">{page}</SettingsLayout>;
 };
 
 export default AppearanceSettingsPage;

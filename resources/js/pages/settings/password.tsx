@@ -90,7 +90,7 @@ const PasswordSettingsPage = () => {
 };
 
 PasswordSettingsPage.layout = (page: ReactElement<PageProps>) => {
-    return <SettingsLayout>{page}</SettingsLayout>;
+    return <SettingsLayout title="Security">{page}</SettingsLayout>;
 };
 
 export default PasswordSettingsPage;
