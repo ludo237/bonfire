@@ -2,53 +2,58 @@
 
 declare(strict_types=1);
 
+use App\Models\Organization;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-uses(Illuminate\Foundation\Testing\RefreshDatabase::class);
+beforeEach(function () {
+    $this->user = User::factory()->create();
+    $this->organization = Organization::factory()->create();
+    $this->organization->members()->attach($this->user);
 
-test('password update page is displayed', function () {
-    $user = User::factory()->create();
-
-    $response = $this
-        ->actingAs($user)
-        ->get(route('password.edit'));
-
-    $response->assertStatus(200);
+    session()->cache()->put('current_organization_id', $this->organization->getKey(), now()->addDays(30));
 });
 
-test('password can be updated', function () {
-    $user = User::factory()->create();
-
-    $response = $this
-        ->actingAs($user)
-        ->from(route('password.edit'))
-        ->put(route('password.update'), [
-            'current_password' => 'password',
-            'password' => 'new-password',
-            'password_confirmation' => 'new-password',
-        ]);
-
-    $response
-        ->assertSessionHasNoErrors()
-        ->assertRedirect(route('password.edit'));
-
-    expect(Hash::check('new-password', $user->refresh()->password))->toBeTrue();
+describe('password update page', function () {
+    it('can be displayed', function () {
+        $this->actingAs($this->user)
+            ->get(route('password.edit'))
+            ->assertStatus(200);
+    });
 });
 
-test('correct password must be provided to update password', function () {
-    $user = User::factory()->create();
+describe('password update', function () {
+    it('allows updating password', function () {
+        $user = $this->user;
 
-    $response = $this
-        ->actingAs($user)
-        ->from(route('password.edit'))
-        ->put(route('password.update'), [
-            'current_password' => 'wrong-password',
-            'password' => 'new-password',
-            'password_confirmation' => 'new-password',
-        ]);
+        $response = $this
+            ->actingAs($user)
+            ->from(route('password.edit'))
+            ->put(route('password.update'), [
+                'current_password' => 'supersecret',
+                'password' => 'new-password',
+                'password_confirmation' => 'new-password',
+            ]);
 
-    $response
-        ->assertSessionHasErrors('current_password')
-        ->assertRedirect(route('password.edit'));
+        $response
+            ->assertSessionHasNoErrors()
+            ->assertRedirect(route('password.edit'));
+
+        expect(Hash::check('new-password', $user->fresh()->password))->toBeTrue();
+    });
+
+    it('requires correct current password', function () {
+        $response = $this
+            ->actingAs($this->user)
+            ->from(route('password.edit'))
+            ->put(route('password.update'), [
+                'current_password' => 'wrong-password',
+                'password' => 'new-password',
+                'password_confirmation' => 'new-password',
+            ]);
+
+        $response
+            ->assertSessionHasErrors('current_password')
+            ->assertRedirect(route('password.edit'));
+    });
 });

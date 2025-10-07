@@ -50,6 +50,6 @@ class RegisteredUserController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('rooms.index', absolute: false));
+        return redirect()->intended(route('check-in.index', absolute: false));
     }
 }
