@@ -11,7 +11,6 @@ dev:
 	"php artisan queue:listen --tries=1" \
 	"php artisan pail --timeout=0" \
 	"php artisan reverb:start --host=0.0.0.0 --port=8080" \
-	"bun run dev" \
 	--names=server,queue,logs,reverb,vite --kill-others
 
 dev-ssr:
