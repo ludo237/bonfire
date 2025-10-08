@@ -24,7 +24,10 @@ class RoomResource extends JsonResource
             'name' => $this->getAttributeValue('name'),
             'type' => $this->getAttributeValue('type'),
             'owner' => new UserResource($this->whenLoaded('organization')),
-            'messages' => MessageResource::collection($this->whenLoaded('messages')),
+            'lastMessage' => $this->when(
+                $this->relationLoaded('messages') && $this->messages->isNotEmpty(),
+                fn () => new MessageResource($this->messages->first())
+            ),
             'users' => UserResource::collection($this->whenLoaded('users')),
             'counts' => [
                 'messages' => $this->whenCounted(relationship: 'messages', default: 0),

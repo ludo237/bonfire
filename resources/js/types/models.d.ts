@@ -13,6 +13,10 @@ interface User extends IModel, SoftDeleteModel {
     biography: string;
     email: string;
     emailVerifiedAt: string | null;
+    initials: string;
+    role?: UserRole;
+    joinedAt?: string;
+    messagesCount?: number;
 }
 
 interface Organization extends IModel {
@@ -33,6 +37,7 @@ interface Room extends IModel {
     users: User[];
     memberships: Membership[];
     messages: Message[];
+    lastMessage?: Message;
     counts: {
         messages: number;
         users: number;

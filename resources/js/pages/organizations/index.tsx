@@ -1,7 +1,7 @@
-import { DataTableSection } from '@/components/organization/data-table-section';
 import { InviteMemberCard } from '@/components/organization/invite-member-card';
 import { LatestMessagesCard } from '@/components/organization/latest-messages-card';
 import { StatsCard } from '@/components/organization/stats-card';
+import { DataTable } from '@/components/tables/data-table';
 import AppLayout from '@/layouts/app-layout';
 import { SharedPageProps } from '@/types/inertia';
 import { Head } from '@inertiajs/react';
@@ -39,17 +39,23 @@ const OrganizationIndexPage = ({
                         <InviteMemberCard />
                     </div>
 
-                    <div className="grid gap-6 lg:grid-cols-2">
-                        <DataTableSection
-                            title="Members"
+                    <div>
+                        <h2 className="py-1.5 text-lg font-semibold">
+                            Members
+                        </h2>
+                        <DataTable
+                            id="members"
                             columns={memberColumns}
-                            data={members}
+                            resource={members}
                         />
+                    </div>
 
-                        <DataTableSection
-                            title="Rooms"
+                    <div>
+                        <h2 className="py-1.5 text-lg font-semibold">Rooms</h2>
+                        <DataTable
+                            id="rooms"
                             columns={roomColumns}
-                            data={rooms}
+                            resource={rooms}
                         />
                     </div>
                 </div>

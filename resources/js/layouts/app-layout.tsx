@@ -22,24 +22,30 @@ export default function AppLayout({
         <>
             {title && <Head title={title} />}
             <SidebarProvider>
-                <AppSidebar />
-                <SidebarInset className="px-6">
-                    <header className="flex h-16 shrink-0 items-center">
-                        <SidebarTrigger className="-ml-1" />
+                <SidebarInset>
+                    <header className="flex shrink-0 items-center py-1.5">
+                        <div className="grow px-3">
+                            <AppBreadcrumb segments={breadcrumbs} />
+                        </div>
                         <Separator
                             orientation="vertical"
                             className="mr-2 data-[orientation=vertical]:h-4"
                         />
-                        <AppBreadcrumb segments={breadcrumbs} />
+                        <SidebarTrigger className="-ml-1" />
                     </header>
-                    <div className="flex flex-1 flex-col">
-                        <div className="border-b bg-background py-6">
+                    <div className="mx-auto max-w-7xl">
+                        <div className="w-full py-1.5">
                             <h1 className="text-2xl font-bold">{title}</h1>
                         </div>
 
                         {children}
                     </div>
                 </SidebarInset>
+                <AppSidebar
+                    collapsible="icon"
+                    variant="floating"
+                    side="right"
+                />
             </SidebarProvider>
         </>
     );

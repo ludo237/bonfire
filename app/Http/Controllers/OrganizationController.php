@@ -15,24 +15,15 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use Psr\SimpleCache\InvalidArgumentException;
 
 class OrganizationController extends Controller
 {
-    /**
-     * @throws InvalidArgumentException
-     */
     public function show(Request $request, Organization $organization): Response
     {
         /** @var User $user */
         $user = $request->user();
-        $organizationId = $request->session()->cache()->get('current_organization_id');
 
-        $organization = Organization::query()
-            ->whereKey($organizationId)
-            ->whereHas('members', fn (Builder $q) => $q->whereKey($user->getKey()))
-            ->withCount(['members', 'rooms'])
-            ->firstOrFail();
+        $organization->loadCount(['members', 'rooms', 'messages']);
 
         $latestMessages = Message::query()
             ->whereHas('room', fn (Builder $q) => $q->where('organization_id', $organization->getKey()))
@@ -41,32 +32,33 @@ class OrganizationController extends Controller
             ->limit(10)
             ->get();
 
-        $totalMessagesCount = Message::query()
-            ->whereHas('room', fn (Builder $q) => $q->where('organization_id', $organization->getKey()))
-            ->count();
-
         return Inertia::render('organizations/index', [
             'organization' => new OrganizationResource($organization),
             'latestMessages' => MessageResource::collection($latestMessages),
             'stats' => [
-                'totalMessages' => $totalMessagesCount,
+                'totalMessages' => $organization->getAttributeValue('messages_count'),
                 'totalMembers' => $organization->getAttributeValue('members_count'),
                 'totalRooms' => $organization->getAttributeValue('rooms_count'),
             ],
-            'members' => Inertia::scroll(fn () => UserResource::collection(
+            'members' => UserResource::collection(
                 $organization
                     ->members()
+                    ->withPivot(['role', 'joined_at'])
+                    ->withCount([
+                        'messages' => fn (Builder $q) => $q->whereHas('room', fn (Builder $q) => $q->where('organization_id', $organization->getKey())),
+                    ])
                     ->paginate(perPage: 10, pageName: 'members')
                     ->withQueryString()
-            )),
-            'rooms' => Inertia::scroll(fn () => RoomResource::collection(
+            ),
+            'rooms' => RoomResource::collection(
                 $organization->rooms()
                     ->withCount(['messages', 'users'])
+                    ->with(['messages' => fn ($q) => $q->with('sender')->latest()->limit(1)])
                     ->whereHas('users', fn (Builder $q) => $q->whereKey($user->getKey()))
                     ->latest()
                     ->paginate(perPage: 10, pageName: 'rooms')
                     ->withQueryString()
-            )),
+            ),
         ]);
     }
 }

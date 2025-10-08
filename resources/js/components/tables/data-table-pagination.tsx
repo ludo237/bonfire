@@ -9,11 +9,10 @@ import {
 type DataPaginationProps = {
     links: LinkResource;
     meta: MetaResource;
-    onPageChange: (url: string) => void;
 };
 
 const DataPagination = (props: DataPaginationProps) => {
-    const { meta, onPageChange } = props;
+    const { meta } = props;
 
     return (
         <RootPagination>
@@ -24,9 +23,10 @@ const DataPagination = (props: DataPaginationProps) => {
                             <PaginationEllipsis />
                         ) : (
                             <PaginationLink
+                                prefetch
+                                href={i.url || '#'}
                                 isActive={i.active}
-                                onClick={() => i.url && onPageChange(i.url)}
-                                className="cursor-pointer"
+                                preserveScroll
                                 size="sm"
                             >
                                 {i.label}

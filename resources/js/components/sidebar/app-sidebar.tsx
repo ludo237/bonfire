@@ -16,16 +16,16 @@ import { SharedPageProps } from '@/types/inertia';
 import OrganizationController from '@/wayfinder/actions/App/Http/Controllers/OrganizationController';
 import { Link, usePage } from '@inertiajs/react';
 import { MessageSquare } from 'lucide-react';
-import * as React from 'react';
+import { ComponentProps } from 'react';
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
     const { auth } = usePage<SharedPageProps>().props;
     const user = auth.user!.data;
     const organization = auth.currentOrganization!.data;
     const rooms = organization.rooms;
 
     return (
-        <Sidebar collapsible="icon" variant="floating" {...props}>
+        <Sidebar {...props}>
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>

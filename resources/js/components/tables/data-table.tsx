@@ -1,3 +1,4 @@
+import DataPagination from '@/components/tables/data-table-pagination';
 import {
     Table,
     TableBody,
@@ -18,28 +19,22 @@ import {
 import { useState } from 'react';
 
 interface DataTableProps<TData, TValue> {
+    id: string;
     columns: ColumnDef<TData, TValue>[];
-    data: TData[];
+    resource: EloquentResource<TData[]>;
 }
 
-export interface TableProps<T> {
-    data: T[];
-    links?: LinkResource;
-    meta?: MetaResource;
-}
-
-export function DataTable<TData, TValue>({
+export const DataTable = <TData, TValue>({
+    id,
     columns,
-    data,
-}: DataTableProps<TData, TValue>) {
+    resource,
+}: DataTableProps<TData, TValue>) => {
     const [sorting, setSorting] = useState<SortingState>([]);
 
     const table = useReactTable({
-        data,
+        data: resource.data,
         columns,
         getCoreRowModel: getCoreRowModel(),
-        // apparently new version of tanstack make this useless since we handle pagination server-side
-        // getPaginationRowModel: getPaginationRowModel(),
         onSortingChange: setSorting,
         getSortedRowModel: getSortedRowModel(),
         state: {
@@ -48,66 +43,80 @@ export function DataTable<TData, TValue>({
     });
 
     return (
-        <Table className="rounded-md border bg-background">
-            <TableHeader>
-                {table.getHeaderGroups().map((headerGroup) => (
-                    <TableRow key={headerGroup.id}>
-                        {headerGroup.headers.map((header) => {
-                            const columnMeta = header.column.columnDef.meta as
-                                | { className?: string }
-                                | undefined;
-                            return (
-                                <TableHead
-                                    key={header.id}
-                                    className={cn(columnMeta?.className)}
-                                >
-                                    {header.isPlaceholder
-                                        ? null
-                                        : flexRender(
-                                              header.column.columnDef.header,
-                                              header.getContext(),
-                                          )}
-                                </TableHead>
-                            );
-                        })}
-                    </TableRow>
-                ))}
-            </TableHeader>
-            <TableBody>
-                {table.getRowModel().rows?.length ? (
-                    table.getRowModel().rows.map((row) => (
-                        <TableRow
-                            key={row.id}
-                            data-state={row.getIsSelected() && 'selected'}
-                        >
-                            {row.getVisibleCells().map((cell) => {
-                                const columnMeta = cell.column.columnDef
+        <>
+            <Table className="rounded-md border bg-background">
+                <TableHeader id={`${id}-table-header`}>
+                    {table.getHeaderGroups().map((headerGroup) => (
+                        <TableRow key={headerGroup.id}>
+                            {headerGroup.headers.map((header) => {
+                                const columnMeta = header.column.columnDef
                                     .meta as { className?: string } | undefined;
                                 return (
-                                    <TableCell
-                                        key={cell.id}
+                                    <TableHead
+                                        key={header.id}
                                         className={cn(columnMeta?.className)}
                                     >
-                                        {flexRender(
-                                            cell.column.columnDef.cell,
-                                            cell.getContext(),
-                                        )}
-                                    </TableCell>
+                                        {header.isPlaceholder
+                                            ? null
+                                            : flexRender(
+                                                  header.column.columnDef
+                                                      .header,
+                                                  header.getContext(),
+                                              )}
+                                    </TableHead>
                                 );
                             })}
                         </TableRow>
-                    ))
-                ) : (
-                    <TableRow>
-                        <TableCell
-                            colSpan={columns.length}
-                            className="h-24 text-center"
-                        >
-                            No results found.
-                        </TableCell>
-                    </TableRow>
-                )}
-            </TableBody>
-        </Table>
+                    ))}
+                </TableHeader>
+                <TableBody id={`${id}-table`}>
+                    {table.getRowModel().rows?.length ? (
+                        table.getRowModel().rows.map((row) => (
+                            <TableRow
+                                key={row.id}
+                                data-state={row.getIsSelected() && 'selected'}
+                            >
+                                {row.getVisibleCells().map((cell) => {
+                                    const columnMeta = cell.column.columnDef
+                                        .meta as
+                                        | { className?: string }
+                                        | undefined;
+                                    return (
+                                        <TableCell
+                                            key={cell.id}
+                                            className={cn(
+                                                columnMeta?.className,
+                                            )}
+                                        >
+                                            {flexRender(
+                                                cell.column.columnDef.cell,
+                                                cell.getContext(),
+                                            )}
+                                        </TableCell>
+                                    );
+                                })}
+                            </TableRow>
+                        ))
+                    ) : (
+                        <TableRow>
+                            <TableCell
+                                colSpan={columns.length}
+                                className="h-24 text-center"
+                            >
+                                No results found.
+                            </TableCell>
+                        </TableRow>
+                    )}
+                </TableBody>
+            </Table>
+            {resource.meta && resource.links && (
+                <div className="w-full py-1.5">
+                    <DataPagination
+                        links={resource.links}
+                        meta={resource.meta}
+                    />
+                </div>
+            )}
+        </>
     );
-}
+};
