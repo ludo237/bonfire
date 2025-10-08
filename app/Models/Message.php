@@ -18,6 +18,28 @@ class Message extends Model
 
     protected $guarded = ['id'];
 
+    protected static function booted(): void
+    {
+        static::creating(function (Message $message) {
+            if (empty($message->client_message_id)) {
+                $message->client_message_id = (string) Str::uuid();
+            }
+        });
+
+        static::created(function (Message $message) {
+            $message->room->touch();
+
+            RoomUser::query()
+                ->where('room_id', $message->room_id)
+                ->where('user_id', '!=', $message->sender_id)
+                ->where('connections', 0)
+                ->update([
+                    'unread_at' => $message->created_at,
+                    'updated_at' => now(),
+                ]);
+        });
+    }
+
     public function room(): BelongsTo
     {
         return $this->belongsTo(Room::class);
@@ -62,27 +84,5 @@ class Message extends Model
     public function isSound(): bool
     {
         return preg_match('/^\/play \w+$/', $this->plainTextBody()) === 1;
-    }
-
-    protected static function booted(): void
-    {
-        static::creating(function (Message $message) {
-            if (empty($message->client_message_id)) {
-                $message->client_message_id = (string) Str::uuid();
-            }
-        });
-
-        static::created(function (Message $message) {
-            $message->room->touch();
-
-            RoomUser::query()
-                ->where('room_id', $message->room_id)
-                ->where('user_id', '!=', $message->sender_id)
-                ->where('connections', 0)
-                ->update([
-                    'unread_at' => $message->created_at,
-                    'updated_at' => now(),
-                ]);
-        });
     }
 }

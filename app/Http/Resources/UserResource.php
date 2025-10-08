@@ -25,6 +25,7 @@ class UserResource extends JsonResource
             'email' => $this->getAttributeValue('email'),
             'emailVerifiedAt' => $this->getAttributeValue('email_verified_at'),
             'initials' => $this->getAttributeValue('initials'),
+            'avatar' => new MediaResource($this->whenLoaded('avatar')),
             'role' => $this->whenPivotLoaded('organization_user', fn () => $this->pivot->role),
             'joinedAt' => $this->whenPivotLoaded('organization_user', fn () => $this->pivot->joined_at),
             'messagesCount' => $this->whenCounted('messages'),

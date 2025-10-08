@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\ProfileUpdateRequest;
+use App\Models\Media;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -31,13 +32,31 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        $user->fill($request->safe()->except('avatar'));
+
+        if ($user->isDirty('email')) {
+            $user->setAttribute('email_verified_at', null);
         }
 
-        $request->user()->save();
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            $path = $file->store(options: 'avatars');
+
+            $media = Media::query()
+                ->create([
+                    'name' => pathinfo($path, PATHINFO_FILENAME),
+                    'extension' => $file->getClientOriginalExtension(),
+                    'original_name' => $file->getClientOriginalName(),
+                    'mime_type' => $file->getMimeType(),
+                    'size' => $file->getSize(),
+                ]);
+
+            $user->setAttribute('avatar_id', $media->getKey());
+        }
+
+        $user->save();
 
         return to_route('profile.edit');
     }

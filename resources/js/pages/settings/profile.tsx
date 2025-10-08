@@ -1,5 +1,5 @@
 import { DangerZone } from '@/components/danger-zone';
-import { InputField, TextareaField } from '@/components/form-field';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
     Card,
@@ -8,15 +8,26 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
+import {
+    Field,
+    FieldDescription,
+    FieldError,
+    FieldGroup,
+    FieldLabel,
+} from '@/components/ui/field';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { useConfirmAction } from '@/hooks/use-confirm-action';
 import SettingsLayout from '@/layouts/settings-layout';
 import { SharedPageProps } from '@/types/inertia';
+import ProfileController from '@/wayfinder/actions/App/Http/Controllers/Settings/ProfileController';
 import { Form, Head, router, usePage } from '@inertiajs/react';
-import { ReactElement } from 'react';
+import { ReactElement, useState } from 'react';
 
 const ProfileSettingsPage = () => {
     const user: User = usePage<SharedPageProps>().props.auth.user!.data;
     const { confirm } = useConfirmAction();
+    const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
 
     const handleDelete = () => {
         confirm(
@@ -25,6 +36,19 @@ const ProfileSettingsPage = () => {
                 router.delete('/user');
             },
         );
+    };
+
+    const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setAvatarPreview(reader.result as string);
+            };
+            reader.readAsDataURL(file);
+        } else {
+            setAvatarPreview(null);
+        }
     };
 
     return (
@@ -38,45 +62,116 @@ const ProfileSettingsPage = () => {
                             Update your account's profile information
                         </CardDescription>
                     </CardHeader>
-                    <Form
-                        action="/users/me"
-                        method="patch"
-                        disableWhileProcessing
-                    >
-                        {({ processing, errors }) => (
-                            <CardContent className="space-y-4">
-                                <InputField
-                                    label="Name"
-                                    name="name"
-                                    defaultValue={user.name}
-                                    required
-                                    error={errors.name}
-                                />
+                    <CardContent>
+                        <Form
+                            action={ProfileController.update()}
+                            method="put"
+                            disableWhileProcessing
+                        >
+                            {({ processing, errors }) => (
+                                <FieldGroup>
+                                    <Field>
+                                        <FieldLabel htmlFor="avatar">
+                                            Avatar
+                                        </FieldLabel>
+                                        <div className="flex items-center gap-4">
+                                            <Avatar className="size-16">
+                                                <AvatarImage
+                                                    src={
+                                                        avatarPreview ||
+                                                        user.avatar?.url
+                                                    }
+                                                    alt={user.name}
+                                                />
+                                                <AvatarFallback>
+                                                    {user.initials}
+                                                </AvatarFallback>
+                                            </Avatar>
+                                            <Input
+                                                id="avatar"
+                                                type="file"
+                                                name="avatar"
+                                                accept="image/jpeg,image/jpg,image/png,image/gif"
+                                                onChange={handleAvatarChange}
+                                                className="flex-1"
+                                            />
+                                        </div>
+                                        {errors.avatar && (
+                                            <FieldError>
+                                                {errors.avatar}
+                                            </FieldError>
+                                        )}
+                                        <FieldDescription>
+                                            JPG, PNG or GIF. Max size 2MB
+                                        </FieldDescription>
+                                    </Field>
 
-                                <InputField
-                                    label="Email"
-                                    name="email"
-                                    type="email"
-                                    defaultValue={user.email}
-                                    required
-                                    error={errors.email}
-                                />
+                                    <Field>
+                                        <FieldLabel htmlFor="name">
+                                            Name
+                                        </FieldLabel>
+                                        <Input
+                                            id="name"
+                                            type="text"
+                                            name="name"
+                                            defaultValue={user.name}
+                                            required
+                                        />
+                                        {errors.name && (
+                                            <FieldError>
+                                                {errors.name}
+                                            </FieldError>
+                                        )}
+                                    </Field>
 
-                                <TextareaField
-                                    label="Bio"
-                                    name="bio"
-                                    defaultValue={user.biography || ''}
-                                    placeholder="Tell us about yourself..."
-                                    rows={3}
-                                    error={errors.bio}
-                                />
+                                    <Field>
+                                        <FieldLabel htmlFor="email">
+                                            Email
+                                        </FieldLabel>
+                                        <Input
+                                            id="email"
+                                            type="email"
+                                            name="email"
+                                            defaultValue={user.email}
+                                            required
+                                        />
+                                        {errors.email && (
+                                            <FieldError>
+                                                {errors.email}
+                                            </FieldError>
+                                        )}
+                                    </Field>
 
-                                <Button type="submit" disabled={processing}>
-                                    Save Changes
-                                </Button>
-                            </CardContent>
-                        )}
-                    </Form>
+                                    <Field>
+                                        <FieldLabel htmlFor="biography">
+                                            Biography
+                                        </FieldLabel>
+                                        <Textarea
+                                            id="biography"
+                                            name="biography"
+                                            defaultValue={user.biography || ''}
+                                            placeholder="Tell us about yourself..."
+                                            rows={3}
+                                        />
+                                        {errors.biography && (
+                                            <FieldError>
+                                                {errors.biography}
+                                            </FieldError>
+                                        )}
+                                    </Field>
+
+                                    <Field>
+                                        <Button
+                                            type="submit"
+                                            disabled={processing}
+                                        >
+                                            Save Changes
+                                        </Button>
+                                    </Field>
+                                </FieldGroup>
+                            )}
+                        </Form>
+                    </CardContent>
                 </Card>
 
                 <DangerZone

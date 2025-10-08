@@ -8,6 +8,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -32,6 +33,20 @@ class User extends Authenticatable
         'two_factor_recovery_codes',
         'bot_token',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'two_factor_confirmed_at' => 'datetime',
+            'password' => 'hashed',
+        ];
+    }
+
+    public function avatar(): BelongsTo
+    {
+        return $this->belongsTo(Media::class);
+    }
 
     public function boosts(): HasMany
     {
@@ -105,14 +120,5 @@ class User extends Authenticatable
 
             $this->delete();
         });
-    }
-
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'two_factor_confirmed_at' => 'datetime',
-            'password' => 'hashed',
-        ];
     }
 }

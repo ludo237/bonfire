@@ -19,7 +19,7 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         /** @var User|null $user */
-        $user = $request->user();
+        $user = $request->user()?->load('avatar');
         $currentOrganization = null;
 
         if ($user) {

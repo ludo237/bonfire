@@ -8,12 +8,25 @@ interface SoftDeleteModel {
     deletedAt: string | null;
 }
 
+interface Media extends IModel {
+    name: string;
+    extension: string;
+    originalName: string;
+    mimeType: string;
+    width: number;
+    height: number;
+    size: number;
+    duration: number | null;
+    url: string;
+}
+
 interface User extends IModel, SoftDeleteModel {
     name: string;
     biography: string;
     email: string;
     emailVerifiedAt: string | null;
     initials: string;
+    avatar?: Media;
     role?: UserRole;
     joinedAt?: string;
     messagesCount?: number;

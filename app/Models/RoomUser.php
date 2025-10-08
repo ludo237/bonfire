@@ -19,6 +19,15 @@ class RoomUser extends Pivot
 
     protected $table = 'room_user';
 
+    protected function casts(): array
+    {
+        return [
+            'unread_at' => 'datetime',
+            'connected_at' => 'datetime',
+            'involvement' => InvolvementLevel::class,
+        ];
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -48,14 +57,5 @@ class RoomUser extends Pivot
     public function connected($query)
     {
         return $query->where('connections', '>', 0);
-    }
-
-    protected function casts(): array
-    {
-        return [
-            'unread_at' => 'datetime',
-            'connected_at' => 'datetime',
-            'involvement' => InvolvementLevel::class,
-        ];
     }
 }
