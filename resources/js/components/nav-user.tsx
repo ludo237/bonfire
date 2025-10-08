@@ -17,7 +17,11 @@ import {
 import ProfileController from '@/wayfinder/actions/App/Http/Controllers/Settings/ProfileController';
 import AuthenticatedSessionController from '@/wayfinder/actions/Laravel/Fortify/Http/Controllers/AuthenticatedSessionController';
 import { Link } from '@inertiajs/react';
-import { ChevronsUpDown, LogOut, UserCog } from 'lucide-react';
+import {
+    IconChevronsUpDown,
+    IconLogout,
+    IconUserCog,
+} from '@tabler/icons-react';
 import { FC } from 'react';
 
 const SidebarNavUser: FC<{ user: User }> = ({ user }) => {
@@ -49,7 +53,7 @@ const SidebarNavUser: FC<{ user: User }> = ({ user }) => {
                                     {user.email}
                                 </span>
                             </div>
-                            <ChevronsUpDown className="ml-auto size-4" />
+                            <IconChevronsUpDown className="ml-auto size-4" />
                         </SidebarMenuButton>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
@@ -82,7 +86,7 @@ const SidebarNavUser: FC<{ user: User }> = ({ user }) => {
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
                             <DropdownMenuItem>
-                                <UserCog />
+                                <IconUserCog />
                                 <Link href={ProfileController.edit()}>
                                     Profile
                                 </Link>
@@ -90,7 +94,7 @@ const SidebarNavUser: FC<{ user: User }> = ({ user }) => {
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>
-                            <LogOut />
+                            <IconLogout />
                             <Link
                                 href={AuthenticatedSessionController.destroy()}
                                 method="delete"

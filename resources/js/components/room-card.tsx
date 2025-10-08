@@ -6,7 +6,7 @@ import {
 } from '@/components/ui/card';
 import RoomController from '@/wayfinder/actions/App/Http/Controllers/RoomController';
 import { Link } from '@inertiajs/react';
-import { Hash, Lock, User } from 'lucide-react';
+import { IconHash, IconLock, IconUser } from '@tabler/icons-react';
 
 interface RoomCardProps {
     room: Room;
@@ -15,13 +15,13 @@ interface RoomCardProps {
 const getRoomIcon = (roomType: string) => {
     switch (roomType) {
         case 'public':
-            return Hash;
+            return IconHash;
         case 'private':
-            return Lock;
+            return IconLock;
         case 'direct':
-            return User;
+            return IconUser;
         default:
-            return Hash;
+            return IconHash;
     }
 };
 

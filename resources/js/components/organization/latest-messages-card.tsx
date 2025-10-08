@@ -6,7 +6,7 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import { useOrganizationMessages } from '@/hooks/use-organization-messages';
-import { MessageSquare } from 'lucide-react';
+import { IconMessageSquare } from '@tabler/icons-react';
 
 function formatTimeAgo(date: Date): string {
     const now = new Date();
@@ -52,7 +52,7 @@ export function LatestMessagesCard({ messages }: LatestMessagesCardProps) {
             <CardContent>
                 {latestMessages.length === 0 ? (
                     <div className="flex flex-col items-center justify-center gap-2 py-8 text-center text-muted-foreground">
-                        <MessageSquare className="h-8 w-8 opacity-50" />
+                        <IconMessageSquare className="h-8 w-8 opacity-50" />
                         <p className="text-sm">No messages yet</p>
                     </div>
                 ) : (

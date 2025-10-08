@@ -10,7 +10,7 @@ import {
 import { SharedPageProps } from '@/types/inertia';
 import CheckInController from '@/wayfinder/actions/App/Http/Controllers/CheckInController';
 import { Form, Head } from '@inertiajs/react';
-import { MessageSquare, Users } from 'lucide-react';
+import { IconMessages, IconUsers } from '@tabler/icons-react';
 
 interface PageProps extends SharedPageProps {
     organizations: EloquentResource<Organization[]>;
@@ -46,14 +46,14 @@ const CheckInPage = ({ organizations }: PageProps) => {
                                 <CardContent>
                                     <div className="flex gap-4 text-sm text-muted-foreground">
                                         <div className="flex items-center gap-1">
-                                            <Users className="h-4 w-4" />
+                                            <IconUsers className="size-4" />
                                             <span>
                                                 {organization.counts.members}{' '}
                                                 members
                                             </span>
                                         </div>
                                         <div className="flex items-center gap-1">
-                                            <MessageSquare className="h-4 w-4" />
+                                            <IconMessages className="size-4" />
                                             <span>
                                                 {organization.counts.rooms}{' '}
                                                 rooms

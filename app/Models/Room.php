@@ -63,6 +63,11 @@ class Room extends Model
         return $this->belongsTo(Organization::class);
     }
 
+    public function owner(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'owner_id');
+    }
+
     #[Scope]
     public function public($query)
     {

@@ -14,6 +14,7 @@ interface MessageSentEvent {
     sender: {
         id: string;
         name: string;
+        initials: string;
     };
 }
 

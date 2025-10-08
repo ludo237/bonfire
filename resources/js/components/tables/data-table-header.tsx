@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
+import { IconArrowsSort } from '@tabler/icons-react';
 import type { Column } from '@tanstack/react-table';
-import { ArrowUpDown } from 'lucide-react';
 
 const DataTableHeader = <T,>({
     text,
@@ -18,7 +18,7 @@ const DataTableHeader = <T,>({
                 }
             >
                 <span className="text-sm font-medium">{text}</span>
-                <ArrowUpDown className="ml-2 size-4" />
+                <IconArrowsSort className="ml-2 size-4" />
             </Button>
         );
     }

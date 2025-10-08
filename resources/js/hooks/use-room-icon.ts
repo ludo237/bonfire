@@ -1,14 +1,20 @@
-import { Hash, Lock, LucideIcon, MessageSquare, User } from 'lucide-react';
+import {
+    Icon,
+    IconHash,
+    IconLock,
+    IconMessageSquare,
+    IconUser,
+} from '@tabler/icons-react';
 
-export function useRoomIcon(roomType: string): LucideIcon {
+export function useRoomIcon(roomType: string): Icon {
     switch (roomType) {
         case 'public':
-            return Hash;
+            return IconHash;
         case 'private':
-            return Lock;
+            return IconLock;
         case 'direct':
-            return User;
+            return IconUser;
         default:
-            return MessageSquare;
+            return IconMessageSquare;
     }
 }

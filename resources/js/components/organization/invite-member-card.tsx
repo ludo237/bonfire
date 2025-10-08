@@ -5,7 +5,7 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-import { UserPlus } from 'lucide-react';
+import { IconUserPlus } from '@tabler/icons-react';
 
 export function InviteMemberCard() {
     return (
@@ -22,7 +22,7 @@ export function InviteMemberCard() {
                     className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 py-3 font-medium text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
                     disabled
                 >
-                    <UserPlus className="h-4 w-4" />
+                    <IconUserPlus className="h-4 w-4" />
                     Invite Member (Coming Soon)
                 </button>
             </CardContent>

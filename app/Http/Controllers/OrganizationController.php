@@ -29,7 +29,7 @@ class OrganizationController extends Controller
             ->whereHas('room', fn (Builder $q) => $q->where('organization_id', $organization->getKey()))
             ->with(['sender', 'room'])
             ->latest()
-            ->limit(10)
+            ->limit(1)
             ->get();
 
         return Inertia::render('organizations/index', [

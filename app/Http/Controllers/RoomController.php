@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\MessageResource;
 use App\Http\Resources\RoomResource;
 use App\Models\Organization;
 use App\Models\Room;
@@ -42,10 +43,18 @@ class RoomController extends Controller
     {
         Gate::authorize('view', $room);
 
-        $room->loadMissing(['organization', 'users', 'messages.sender']);
+        $room->loadMissing(['organization', 'owner', 'users.avatar']);
 
         return Inertia::render('rooms/show', [
             'room' => new RoomResource($room),
+            'messages' => Inertia::scroll(
+                fn () => MessageResource::collection(
+                    $room->messages()
+                        ->with(['sender.avatar'])
+                        ->oldest()
+                        ->cursorPaginate(50)
+                )
+            ),
         ]);
     }
 
