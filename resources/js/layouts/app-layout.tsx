@@ -33,7 +33,7 @@ export default function AppLayout({
                         />
                         <SidebarTrigger className="-ml-1" />
                     </header>
-                    <div className="flex flex-1 flex-col px-16">
+                    <div className="flex flex-1 flex-col px-4">
                         <div className="w-full py-1.5">
                             <h1 className="text-2xl font-bold">{title}</h1>
                         </div>

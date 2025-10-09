@@ -1,10 +1,7 @@
-"use client"
-
 import * as React from "react"
 import { Slot as SlotPrimitive } from "radix-ui"
 import { cva, VariantProps } from "class-variance-authority"
-import { IconPanelLeft } from "@tabler/icons-react"
-
+import { IconLayoutSidebarInactive } from "@tabler/icons-react"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -273,7 +270,7 @@ function SidebarTrigger({
       }}
       {...props}
     >
-      <IconPanelLeft />
+        <IconLayoutSidebarInactive />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   )

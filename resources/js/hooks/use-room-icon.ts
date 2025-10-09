@@ -2,7 +2,7 @@ import {
     Icon,
     IconHash,
     IconLock,
-    IconMessageSquare,
+    IconMessage,
     IconUser,
 } from '@tabler/icons-react';
 
@@ -15,6 +15,6 @@ export function useRoomIcon(roomType: string): Icon {
         case 'direct':
             return IconUser;
         default:
-            return IconMessageSquare;
+            return IconMessage;
     }
 }

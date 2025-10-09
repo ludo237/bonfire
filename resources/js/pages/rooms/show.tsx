@@ -191,7 +191,7 @@ const RoomShowPage = ({
 };
 
 RoomShowPage.layout = (page: ReactElement<PageProps>) => {
-    return <AppLayout title="Your room">{page}</AppLayout>;
+    return <AppLayout title={page.props.room.data.name}>{page}</AppLayout>;
 };
 
 export default RoomShowPage;

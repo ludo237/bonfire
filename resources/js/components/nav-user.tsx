@@ -18,7 +18,7 @@ import ProfileController from '@/wayfinder/actions/App/Http/Controllers/Settings
 import AuthenticatedSessionController from '@/wayfinder/actions/Laravel/Fortify/Http/Controllers/AuthenticatedSessionController';
 import { Link } from '@inertiajs/react';
 import {
-    IconChevronsUpDown,
+    IconChevronsUpRight,
     IconLogout,
     IconUserCog,
 } from '@tabler/icons-react';
@@ -53,7 +53,7 @@ const SidebarNavUser: FC<{ user: User }> = ({ user }) => {
                                     {user.email}
                                 </span>
                             </div>
-                            <IconChevronsUpDown className="ml-auto size-4" />
+                            <IconChevronsUpRight className="ml-auto size-4" />
                         </SidebarMenuButton>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent

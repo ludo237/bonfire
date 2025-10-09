@@ -15,7 +15,7 @@ import {
 import { SharedPageProps } from '@/types/inertia';
 import OrganizationController from '@/wayfinder/actions/App/Http/Controllers/OrganizationController';
 import { Link, usePage } from '@inertiajs/react';
-import { IconMessageSquare } from '@tabler/icons-react';
+import { IconMessages } from '@tabler/icons-react';
 import { ComponentProps } from 'react';
 
 export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
@@ -36,7 +36,7 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
                                 )}
                             >
                                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                                    <IconMessageSquare className="size-4" />
+                                    <IconMessages className="size-4" />
                                 </div>
                                 <div className="grid flex-1 text-left text-sm leading-tight">
                                     <span className="truncate font-medium">
